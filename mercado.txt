@@ -1,0 +1,309 @@
+Mercado Completo
+Lista de objetos disponibles organizados por categoría:
+
+Equipo de Aventuras:
+Acid: 25 oro
+Alchemist's Fire: 50 oro
+Antitoxin: 50 oro
+Backpack: 2 oro
+Ball Bearings: 1 oro
+Barrel: 2 oro
+Basket: 4 plata
+Bedroll: 1 oro
+Bell: 1 oro
+Blanket: 5 plata
+Block and Tackle: 1 oro
+Book: 25 oro
+Bucket: 5 cobre
+Bullseye Lantern: 10 oro
+Burglar's Pack: 16 oro
+Caltrops: 1 oro
+Candle: 1 cobre
+Chain (10 feet): 5 oro
+Chest: 5 oro
+Climber's Kit: 25 oro
+Component Pouch: 25 oro
+Costume: 5 oro
+Crossbow Bolt Case: 1 oro
+Crowbar: 2 oro
+Diplomat's Pack: 39 oro
+Dungeoneer's Pack: 12 oro
+Entertainer's Pack: 40 oro
+Explorer's Pack: 10 oro
+Fine Clothes: 15 oro
+Flask: 2 cobre
+Glass Bottle: 2 oro
+Grappling Hook: 2 oro
+Healer's Kit: 5 oro
+Holy Water: 25 oro
+Hooded Lantern: 5 oro
+Hunting Trap: 5 oro
+Ink: 10 oro
+Ink Pen: 2 cobre
+Iron Pot: 2 oro
+Iron Spike: 1 plata
+Iron Spikes: 1 oro
+Jug: 2 cobre
+Ladder: 1 plata
+Lamp: 5 plata
+Lock: 10 oro
+Magnifying Glass: 100 oro
+Manacles: 2 oro
+Map: 1 oro
+Map Scroll Case: 1 oro
+Mirror: 5 oro
+Net: 1 oro
+Oil (flask): 1 plata
+Paper: 2 plata
+Parchment: 1 plata
+Perfume: 5 oro
+Pole (10-foot): 5 cobre
+Portable Ram: 4 oro
+Pouch: 5 plata
+Potion of Healing: 50 oro
+Priest's Pack: 33 oro
+Quiver: 1 oro
+Rations (1 day): 5 plata
+Robe: 1 oro
+Rope (50 feet, hempen): 1 oro
+Sack: 1 cobre
+Scholar's Pack: 40 oro
+Shovel: 2 oro
+Signal Whistle: 5 cobre
+Spyglass: 1000 oro
+String: 1 plata
+Tent: 2 oro
+Tinderbox: 5 plata
+Torch: 1 cobre
+Traveler's Clothes: 2 oro
+Vial: 1 oro
+Waterskin: 2 plata
+
+Armas:
+Battleaxe: 10 oro
+Blowgun: 10 oro
+Club: 1 plata
+Dagger: 2 oro
+Dart: 5 cobre
+Flail: 10 oro
+Glaive: 20 oro
+Greataxe: 30 oro
+Greatclub: 2 plata
+Greatsword: 50 oro
+Halberd: 20 oro
+Hand Crossbow: 75 oro
+Handaxe: 5 oro
+Heavy Crossbow: 50 oro
+Javelin: 5 plata
+Lance: 10 oro
+Light Crossbow: 25 oro
+Light Hammer: 2 oro
+Longbow: 50 oro
+Longsword: 15 oro
+Mace: 5 oro
+Maul: 10 oro
+Morningstar: 15 oro
+Pike: 10 oro
+Quarterstaff: 2 plata
+Rapier: 25 oro
+Scimitar: 25 oro
+Shortbow: 25 oro
+Shortsword: 10 oro
+Sickle: 1 oro
+Sling: 1 plata
+Spear: 1 oro
+Staff: 5 oro
+Trident: 5 oro
+War Pick: 5 oro
+Warhammer: 15 oro
+Whip: 2 oro
+Wooden Staff: 5 oro
+
+Herramientas:
+Alchemist's Supplies: 50 oro
+Brewer's Supplies: 20 oro
+Calligrapher's Supplies: 10 oro
+Carpenter's Tools: 8 oro
+Cartographer's Tools: 15 oro
+Cobbler's Tools: 5 oro
+Cook's Utensils: 1 oro
+Disguise Kit: 25 oro
+Forgery Kit: 15 oro
+Glassblower's Tools: 30 oro
+Herbalism Kit: 5 oro
+Jeweler's Tools: 30 oro
+Leatherworker's Tools: 5 oro
+Mason's Tools: 1 oro
+Navigator's Tools: 25 oro
+Painter's Supplies: 10 oro
+Poisoner's Kit: 50 oro
+Potter's Tools: 10 oro
+Smith's Tools: 20 oro
+Thieve's Tools: 25 oro
+Tinker's Tools: 50 oro
+Weaver's Tools: 1 oro
+Woodcarver's Tools: 1 oro
+
+Armaduras:
+Padded Armor: 5 oro
+Leather Armor: 10 oro
+Studded Leather Armor: 45 oro
+Hide Armor: 10 oro
+Chain Shirt: 50 oro
+Scale Mail: 50 oro
+Breastplate: 400 oro
+Half Plate: 750 oro
+Ring Mail: 30 oro
+Chain Mail: 75 oro
+Splint Armor: 200 oro
+Plate Armor: 1500 oro
+Shield: 10 oro
+
+Munición:
+Arrows (20): 1 oro
+Bolts (20): 1 oro
+Needles (50): 1 oro
+Sling Bullets (20): 4 cobre
+
+Foco de Lanzamiento de Conjuros:
+Amulet: 5 oro
+Crystal: 10 oro
+Emblem: 5 oro
+Orb: 20 oro
+Reliquary: 5 oro
+Rod: 10 oro
+Orb: 20 oro
+Sprig of Mistletoe: 1 oro
+Wand: 10 oro
+Yew Wand: 10 oro
+
+Comida y Bebidas:
+Ale (mug): 4 cobre
+Bread (loaf): 2 cobre
+Cheese (wedge): 1 plata
+Common Wine (bottle): 2 plata
+Fine Wine (bottle): 10 oro
+
+Materiales de Conjuros:
+Materials for Ceremony: 25 oro
+Materials for Chromatic Orb: 50 oro
+Materials for Find Familiar: 10 oro
+Materials for Identify: 100 oro
+Materials for Illusory Script: 10 oro
+Materials for Protection from Evil and Good: 25 oro
+Materials for Arcane Lock: 25 oro
+Materials for Augury: 25 oro
+Materials for Continual Flame: 50 oro
+Materials for Magic Mouth: 10 oro
+Materials for Summon Beast: 200 oro
+Materials for Warding Bond: 100 oro
+Materials for Clairvoyance: 100 oro
+Materials for Glyph of Warding: 200 oro
+Materials for Magic Circle: 100 oro
+Materials for Nondetection: 25 oro
+Materials for Revivify: 300 oro
+Materials for Summon Fey: 300 oro
+Materials for Summon Shadowspawn: 300 oro
+Materials for Summon Undead: 300 oro
+Materials for Divination: 25 oro
+Materials for Leomund's Secret Chest: 5050 oro
+Materials for Shadow of Moil: 150 oro
+Materials for Summon Aberration: 400 oro
+Materials for Summon Construct: 400 oro
+Materials for Summon Elemental: 400 oro
+Materials for Stoneskin: 100 oro
+Materials for Awaken: 1000 oro
+Materials for Dawn: 100 oro
+Materials for Greater Restoration: 100 oro
+Materials for Hallow: 1000 oro
+Materials for Legend Lore: 450 oro
+Materials for Planar Binding: 1000 oro
+Materials for Raise Dead: 500 oro
+Materials for Reincarnate: 1000 oro
+Materials for Scrying: 1000 oro
+Materials for Summon Celestial: 500 oro
+Materials for Summon Dragon: 500 oro
+Materials for Teleportation Circle: 50 oro
+Materials for Circle of Death: 500 oro
+Materials for Contingency: 1500 oro
+Materials for Create Homunculus: 1000 oro
+Materials for Create Undead: 150 oro
+Materials for Drawmij's Instant Summons: 1000 oro
+Materials for Find the Path: 100 oro
+Materials for Forbiddance: 1000 oro
+Materials for Heroes' Feast: 1000 oro
+Materials for Magic Jar: 500 oro
+Materials for Programmed Illusion: 25 oro
+Materials for Soul Cage: 100 oro
+Materials for Summon Fiend: 600 oro
+Materials for Tasha's Otherworldly Guise: 500 oro
+Materials for True Seeing: 25 oro
+Materials for Forcecage: 1500 oro
+Materials for Mordenkainen's Magnificent Mansion: 15 oro
+Materials for Mordenkainen's Sword: 250 oro
+Materials for Plane Shift: 250 oro
+Materials for Resurrection: 1000 oro
+Materials for Sequester: 5000 oro
+Materials for Simulacrum: 1500 oro
+Materials for Symbol: 1000 oro
+Materials for Clone: 3000 oro
+Materials for Holy Aura: 1000 oro
+Materials for Mighty Fortress: 500 oro
+Materials for Astral Projection: 1100 oro
+Materials for Gate: 5000 oro
+Materials for Imprisonment: 5000 oro
+Materials for Invulnerability: 500 oro
+Materials for Shapechange: 1500 oro
+Materials for True Resurrection: 25000 oro
+
+Monturas y Vehículos:
+Draft Horse: 50 oro
+Riding Horse: 75 oro
+Mule: 8 oro
+Mastiff: 25 oro
+Pony: 30 oro
+Warhorse: 400 oro
+Carriage: 100 oro
+Cart: 15 oro
+Chariot: 250 oro
+Sled: 20 oro
+Wagon: 35 oro
+Rowboat: 50 oro
+Galley: 30000 oro
+Keelboat: 3000 oro
+Longship: 10000 oro
+Sailing Ship: 10000 oro
+Rowboat: 50 oro
+Warship: 25000 oro
+Exotic Saddle: 60 oro
+Feed (per day): 5 cobre
+Military Saddle: 20 oro
+Riding Saddle: 10 oro
+Stabling (per day): 5 cobre
+
+Servicios:
+Servicio de Mending: 30 oro
+Servicio de Ceremony: 50 oro
+Servicio de Identify: 200 oro
+Servicio de Lesser Restoration: 200 oro
+Servicio de Suggestion + Zone of Truth: 300 oro
+Servicio de Speak with Dead: 300 oro
+Servicio de Revivify: 600 oro
+Servicio de Dispel Magic: 300 oro
+Servicio de Remove Curse: 300 oro
+Servicio de Greater Restoration: 2100 oro
+Servicio de Raise Dead: 2500 oro
+
+Armadura de Montura:
+Padded Armor (Barding): 20 oro
+Leather Armor (Barding): 40 oro
+Studded Leather Armor (Barding): 180 oro
+Hide Armor (Barding): 40 oro
+Chain Shirt (Barding): 200 oro
+Scale Mail (Barding): 200 oro
+Breastplate (Barding): 1600 oro
+Half Plate (Barding): 3000 oro
+Ring Mail (Barding): 120 oro
+Chain Mail (Barding): 300 oro
+Splint Armor (Barding): 800 oro
+Plate Armor (Barding): 6000 oro

@@ -1,0 +1,29 @@
+{
+  "changed": [
+    {
+      "name": "Map Scroll Case",
+      "lookup": "Map or Scroll Case"
+    },
+    {
+      "name": "Rope (50 feet, hempen)",
+      "lookup": "Rope"
+    },
+    {
+      "name": "Thieve's Tools",
+      "lookup": "Thieves' Tools"
+    },
+    {
+      "name": "Half Plate",
+      "lookup": "Half Plate Armor"
+    },
+    {
+      "name": "Half Plate (Barding)",
+      "lookup": "Half Plate Armor (Barding)"
+    }
+  ],
+  "ignored": [
+    {
+      "name": "Servicio de Suggestion + Zone of Truth"
+    }
+  ]
+}

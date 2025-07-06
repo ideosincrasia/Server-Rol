@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Tienda DnD</title>
+  <style>
+    body { font-family: sans-serif; max-width:1000px; margin:auto; padding:2rem }
+    #categories { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1rem }
+    .tag { padding:.3rem .6rem; border:1px solid#333; border-radius:3px; cursor:pointer; user-select:none }
+    .tag.active { background:#333; color:#fff }
+    #products { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:1rem }
+    .card { border:1px solid #ccc; padding:1rem; border-radius:4px; text-align:center }
+    .card h3 { margin:0 0 .5rem; font-size:1rem }
+    .card p  { margin:0; font-weight:bold }
+    .counter { display:flex; align-items:center; justify-content:center; gap:.5rem; margin-top:.5rem }
+    .counter button { width:1.5rem; height:1.5rem }
+  </style>
+</head>
+<body>
+  <h1>Tienda de Rol DnD</h1>
+
+  <div id="categories">
+    <div class="tag active" data-cat="All">Todos</div>
+    <% categorias.forEach(cat=>{ %>
+      <div class="tag" data-cat="<%=cat%>"><%=cat%></div>
+    <% }) %>
+  </div>
+
+  <div id="products">
+    <% productos.forEach(item=>{ %>
+      <div class="card" data-cat="<%=item.category%>" 
+           data-name="<%=item.name%>"
+           data-price-amount="<%=item.marketPrice.amount%>"
+           data-price-currency="<%=item.marketPrice.currency%>">
+        <h3><%=item.name%></h3>
+        <p><%=item.marketPrice.amount%> <%=item.marketPrice.currency%></p>
+        <div class="counter">
+          <button class="minus">-</button>
+          <span class="count">0</span>
+          <button class="plus">+</button>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+
+  <button id="checkout" style="margin-top:2rem">Ver carrito</button>
+
+  <script>
+    const tags  = document.querySelectorAll('.tag')
+    const cards = document.querySelectorAll('.card')
+    const cart  = JSON.parse(localStorage.getItem('cart')||'{}')
+
+    // inicializar contadores
+    cards.forEach(card=>{
+      const name = card.dataset.name
+      const cnt  = cart[name]||0
+      card.querySelector('.count').textContent = cnt
+    })
+
+    // filtrar categoría
+    tags.forEach(tag=>{
+      tag.addEventListener('click',()=>{
+        tags.forEach(t=>t.classList.remove('active'))
+        tag.classList.add('active')
+        const cat = tag.dataset.cat
+        cards.forEach(c=>{
+          c.style.display = (cat==='All'||c.dataset.cat===cat)?'':'none'
+        })
+      })
+    })
+
+    // + / – en carrito
+    cards.forEach(card=>{
+      const name = card.dataset.name
+      const btnPlus  = card.querySelector('.plus')
+      const btnMinus = card.querySelector('.minus')
+      const spanCnt  = card.querySelector('.count')
+
+      btnPlus.addEventListener('click',()=>{
+        cart[name] = (cart[name]||0) + 1
+        spanCnt.textContent = cart[name]
+        localStorage.setItem('cart', JSON.stringify(cart))
+      })
+      btnMinus.addEventListener('click',()=>{
+        if((cart[name]||0)>0){
+          cart[name]--
+          spanCnt.textContent = cart[name]
+          localStorage.setItem('cart', JSON.stringify(cart))
+        }
+      })
+    })
+
+    // ir a /cart
+    document.getElementById('checkout')
+      .addEventListener('click',()=> location.href='/cart')
+  </script>
+</body>
+</html>

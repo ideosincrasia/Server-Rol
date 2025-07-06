@@ -1,0 +1,1997 @@
+[
+  {
+    "name": "Acid",
+    "price": {
+      "amount": 25.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Alchemist's Fire",
+    "price": {
+      "amount": 50.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Antitoxin",
+    "price": {
+      "amount": 50.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Backpack",
+    "price": {
+      "amount": 2.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Ball Bearings",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Barrel",
+    "price": {
+      "amount": 2.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Basket",
+    "price": {
+      "amount": 4.0,
+      "currency": "silver"
+    }
+  },
+  {
+    "name": "Bedroll",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Bell",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Blanket",
+    "price": {
+      "amount": 5.0,
+      "currency": "silver"
+    }
+  },
+  {
+    "name": "Block and Tackle",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Book",
+    "price": {
+      "amount": 25.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Bucket",
+    "price": {
+      "amount": 5.0,
+      "currency": "copper"
+    }
+  },
+  {
+    "name": "Bullseye Lantern",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Burglar's Pack",
+    "price": {
+      "amount": 16.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Caltrops",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Candle",
+    "price": {
+      "amount": 1.0,
+      "currency": "copper"
+    }
+  },
+  {
+    "name": "Chain (10 feet)",
+    "price": {
+      "amount": 5.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Chest",
+    "price": {
+      "amount": 5.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Climber's Kit",
+    "price": {
+      "amount": 25.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Component Pouch",
+    "price": {
+      "amount": 25.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Costume",
+    "price": {
+      "amount": 5.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Crossbow Bolt Case",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Crowbar",
+    "price": {
+      "amount": 2.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Diplomat's Pack",
+    "price": {
+      "amount": 39.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Dungeoneer's Pack",
+    "price": {
+      "amount": 12.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Entertainer's Pack",
+    "price": {
+      "amount": 40.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Explorer's Pack",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Fine Clothes",
+    "price": {
+      "amount": 15.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Flask",
+    "price": {
+      "amount": 2.0,
+      "currency": "copper"
+    }
+  },
+  {
+    "name": "Glass Bottle",
+    "price": {
+      "amount": 2.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Grappling Hook",
+    "price": {
+      "amount": 2.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Healer's Kit",
+    "price": {
+      "amount": 5.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Holy Water",
+    "price": {
+      "amount": 25.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Hooded Lantern",
+    "price": {
+      "amount": 5.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Hunting Trap",
+    "price": {
+      "amount": 5.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Ink",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Ink Pen",
+    "price": {
+      "amount": 2.0,
+      "currency": "copper"
+    }
+  },
+  {
+    "name": "Iron Pot",
+    "price": {
+      "amount": 2.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Iron Spike",
+    "price": {
+      "amount": 1.0,
+      "currency": "silver"
+    }
+  },
+  {
+    "name": "Iron Spikes",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Jug",
+    "price": {
+      "amount": 2.0,
+      "currency": "copper"
+    }
+  },
+  {
+    "name": "Ladder",
+    "price": {
+      "amount": 1.0,
+      "currency": "silver"
+    }
+  },
+  {
+    "name": "Lamp",
+    "price": {
+      "amount": 5.0,
+      "currency": "silver"
+    }
+  },
+  {
+    "name": "Lock",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Magnifying Glass",
+    "price": {
+      "amount": 100.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Manacles",
+    "price": {
+      "amount": 2.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Map",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Map Scroll Case",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Mirror",
+    "price": {
+      "amount": 5.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Net",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Oil (flask)",
+    "price": {
+      "amount": 1.0,
+      "currency": "silver"
+    }
+  },
+  {
+    "name": "Paper",
+    "price": {
+      "amount": 2.0,
+      "currency": "silver"
+    }
+  },
+  {
+    "name": "Parchment",
+    "price": {
+      "amount": 1.0,
+      "currency": "silver"
+    }
+  },
+  {
+    "name": "Perfume",
+    "price": {
+      "amount": 5.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Pole (10-foot)",
+    "price": {
+      "amount": 5.0,
+      "currency": "copper"
+    }
+  },
+  {
+    "name": "Portable Ram",
+    "price": {
+      "amount": 4.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Pouch",
+    "price": {
+      "amount": 5.0,
+      "currency": "silver"
+    }
+  },
+  {
+    "name": "Potion of Healing",
+    "price": {
+      "amount": 50.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Priest's Pack",
+    "price": {
+      "amount": 33.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Quiver",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Rations (1 day)",
+    "price": {
+      "amount": 5.0,
+      "currency": "silver"
+    }
+  },
+  {
+    "name": "Robe",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Rope (50 feet, hempen)",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Sack",
+    "price": {
+      "amount": 1.0,
+      "currency": "copper"
+    }
+  },
+  {
+    "name": "Scholar's Pack",
+    "price": {
+      "amount": 40.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Shovel",
+    "price": {
+      "amount": 2.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Signal Whistle",
+    "price": {
+      "amount": 5.0,
+      "currency": "copper"
+    }
+  },
+  {
+    "name": "Spyglass",
+    "price": {
+      "amount": 1000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "String",
+    "price": {
+      "amount": 1.0,
+      "currency": "silver"
+    }
+  },
+  {
+    "name": "Tent",
+    "price": {
+      "amount": 2.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Tinderbox",
+    "price": {
+      "amount": 5.0,
+      "currency": "silver"
+    }
+  },
+  {
+    "name": "Torch",
+    "price": {
+      "amount": 1.0,
+      "currency": "copper"
+    }
+  },
+  {
+    "name": "Traveler's Clothes",
+    "price": {
+      "amount": 2.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Vial",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Waterskin",
+    "price": {
+      "amount": 2.0,
+      "currency": "silver"
+    }
+  },
+  {
+    "name": "Battleaxe",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Blowgun",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Club",
+    "price": {
+      "amount": 1.0,
+      "currency": "silver"
+    }
+  },
+  {
+    "name": "Dagger",
+    "price": {
+      "amount": 2.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Dart",
+    "price": {
+      "amount": 5.0,
+      "currency": "copper"
+    }
+  },
+  {
+    "name": "Flail",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Glaive",
+    "price": {
+      "amount": 20.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Greataxe",
+    "price": {
+      "amount": 30.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Greatclub",
+    "price": {
+      "amount": 2.0,
+      "currency": "silver"
+    }
+  },
+  {
+    "name": "Greatsword",
+    "price": {
+      "amount": 50.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Halberd",
+    "price": {
+      "amount": 20.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Hand Crossbow",
+    "price": {
+      "amount": 75.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Handaxe",
+    "price": {
+      "amount": 5.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Heavy Crossbow",
+    "price": {
+      "amount": 50.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Javelin",
+    "price": {
+      "amount": 5.0,
+      "currency": "silver"
+    }
+  },
+  {
+    "name": "Lance",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Light Crossbow",
+    "price": {
+      "amount": 25.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Light Hammer",
+    "price": {
+      "amount": 2.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Longbow",
+    "price": {
+      "amount": 50.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Longsword",
+    "price": {
+      "amount": 15.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Mace",
+    "price": {
+      "amount": 5.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Maul",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Morningstar",
+    "price": {
+      "amount": 15.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Pike",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Quarterstaff",
+    "price": {
+      "amount": 2.0,
+      "currency": "silver"
+    }
+  },
+  {
+    "name": "Rapier",
+    "price": {
+      "amount": 25.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Scimitar",
+    "price": {
+      "amount": 25.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Shortbow",
+    "price": {
+      "amount": 25.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Shortsword",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Sickle",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Sling",
+    "price": {
+      "amount": 1.0,
+      "currency": "silver"
+    }
+  },
+  {
+    "name": "Spear",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Staff",
+    "price": {
+      "amount": 5.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Trident",
+    "price": {
+      "amount": 5.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "War Pick",
+    "price": {
+      "amount": 5.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Warhammer",
+    "price": {
+      "amount": 15.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Whip",
+    "price": {
+      "amount": 2.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Wooden Staff",
+    "price": {
+      "amount": 5.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Alchemist's Supplies",
+    "price": {
+      "amount": 50.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Brewer's Supplies",
+    "price": {
+      "amount": 20.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Calligrapher's Supplies",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Carpenter's Tools",
+    "price": {
+      "amount": 8.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Cartographer's Tools",
+    "price": {
+      "amount": 15.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Cobbler's Tools",
+    "price": {
+      "amount": 5.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Cook's Utensils",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Disguise Kit",
+    "price": {
+      "amount": 25.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Forgery Kit",
+    "price": {
+      "amount": 15.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Glassblower's Tools",
+    "price": {
+      "amount": 30.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Herbalism Kit",
+    "price": {
+      "amount": 5.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Jeweler's Tools",
+    "price": {
+      "amount": 30.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Leatherworker's Tools",
+    "price": {
+      "amount": 5.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Mason's Tools",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Navigator's Tools",
+    "price": {
+      "amount": 25.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Painter's Supplies",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Poisoner's Kit",
+    "price": {
+      "amount": 50.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Potter's Tools",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Smith's Tools",
+    "price": {
+      "amount": 20.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Thieve's Tools",
+    "price": {
+      "amount": 25.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Tinker's Tools",
+    "price": {
+      "amount": 50.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Weaver's Tools",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Woodcarver's Tools",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Padded Armor",
+    "price": {
+      "amount": 5.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Leather Armor",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Studded Leather Armor",
+    "price": {
+      "amount": 45.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Hide Armor",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Chain Shirt",
+    "price": {
+      "amount": 50.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Scale Mail",
+    "price": {
+      "amount": 50.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Breastplate",
+    "price": {
+      "amount": 400.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Half Plate",
+    "price": {
+      "amount": 750.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Ring Mail",
+    "price": {
+      "amount": 30.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Chain Mail",
+    "price": {
+      "amount": 75.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Splint Armor",
+    "price": {
+      "amount": 200.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Plate Armor",
+    "price": {
+      "amount": 1500.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Shield",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Arrows (20)",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Bolts (20)",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Needles (50)",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Sling Bullets (20)",
+    "price": {
+      "amount": 4.0,
+      "currency": "copper"
+    }
+  },
+  {
+    "name": "Amulet",
+    "price": {
+      "amount": 5.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Crystal",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Emblem",
+    "price": {
+      "amount": 5.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Orb",
+    "price": {
+      "amount": 20.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Reliquary",
+    "price": {
+      "amount": 5.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Rod",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Orb",
+    "price": {
+      "amount": 20.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Sprig of Mistletoe",
+    "price": {
+      "amount": 1.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Wand",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Yew Wand",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Ale (mug)",
+    "price": {
+      "amount": 4.0,
+      "currency": "copper"
+    }
+  },
+  {
+    "name": "Bread (loaf)",
+    "price": {
+      "amount": 2.0,
+      "currency": "copper"
+    }
+  },
+  {
+    "name": "Cheese (wedge)",
+    "price": {
+      "amount": 1.0,
+      "currency": "silver"
+    }
+  },
+  {
+    "name": "Common Wine (bottle)",
+    "price": {
+      "amount": 2.0,
+      "currency": "silver"
+    }
+  },
+  {
+    "name": "Fine Wine (bottle)",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Ceremony",
+    "price": {
+      "amount": 25.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Chromatic Orb",
+    "price": {
+      "amount": 50.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Find Familiar",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Identify",
+    "price": {
+      "amount": 100.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Illusory Script",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Protection from Evil and Good",
+    "price": {
+      "amount": 25.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Arcane Lock",
+    "price": {
+      "amount": 25.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Augury",
+    "price": {
+      "amount": 25.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Continual Flame",
+    "price": {
+      "amount": 50.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Magic Mouth",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Summon Beast",
+    "price": {
+      "amount": 200.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Warding Bond",
+    "price": {
+      "amount": 100.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Clairvoyance",
+    "price": {
+      "amount": 100.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Glyph of Warding",
+    "price": {
+      "amount": 200.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Magic Circle",
+    "price": {
+      "amount": 100.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Nondetection",
+    "price": {
+      "amount": 25.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Revivify",
+    "price": {
+      "amount": 300.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Summon Fey",
+    "price": {
+      "amount": 300.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Summon Shadowspawn",
+    "price": {
+      "amount": 300.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Summon Undead",
+    "price": {
+      "amount": 300.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Divination",
+    "price": {
+      "amount": 25.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Leomund's Secret Chest",
+    "price": {
+      "amount": 5050.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Shadow of Moil",
+    "price": {
+      "amount": 150.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Summon Aberration",
+    "price": {
+      "amount": 400.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Summon Construct",
+    "price": {
+      "amount": 400.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Summon Elemental",
+    "price": {
+      "amount": 400.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Stoneskin",
+    "price": {
+      "amount": 100.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Awaken",
+    "price": {
+      "amount": 1000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Dawn",
+    "price": {
+      "amount": 100.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Greater Restoration",
+    "price": {
+      "amount": 100.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Hallow",
+    "price": {
+      "amount": 1000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Legend Lore",
+    "price": {
+      "amount": 450.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Planar Binding",
+    "price": {
+      "amount": 1000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Raise Dead",
+    "price": {
+      "amount": 500.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Reincarnate",
+    "price": {
+      "amount": 1000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Scrying",
+    "price": {
+      "amount": 1000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Summon Celestial",
+    "price": {
+      "amount": 500.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Summon Dragon",
+    "price": {
+      "amount": 500.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Teleportation Circle",
+    "price": {
+      "amount": 50.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Circle of Death",
+    "price": {
+      "amount": 500.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Contingency",
+    "price": {
+      "amount": 1500.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Create Homunculus",
+    "price": {
+      "amount": 1000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Create Undead",
+    "price": {
+      "amount": 150.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Drawmij's Instant Summons",
+    "price": {
+      "amount": 1000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Find the Path",
+    "price": {
+      "amount": 100.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Forbiddance",
+    "price": {
+      "amount": 1000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Heroes' Feast",
+    "price": {
+      "amount": 1000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Magic Jar",
+    "price": {
+      "amount": 500.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Programmed Illusion",
+    "price": {
+      "amount": 25.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Soul Cage",
+    "price": {
+      "amount": 100.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Summon Fiend",
+    "price": {
+      "amount": 600.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Tasha's Otherworldly Guise",
+    "price": {
+      "amount": 500.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for True Seeing",
+    "price": {
+      "amount": 25.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Forcecage",
+    "price": {
+      "amount": 1500.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Mordenkainen's Magnificent Mansion",
+    "price": {
+      "amount": 15.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Mordenkainen's Sword",
+    "price": {
+      "amount": 250.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Plane Shift",
+    "price": {
+      "amount": 250.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Resurrection",
+    "price": {
+      "amount": 1000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Sequester",
+    "price": {
+      "amount": 5000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Simulacrum",
+    "price": {
+      "amount": 1500.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Symbol",
+    "price": {
+      "amount": 1000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Clone",
+    "price": {
+      "amount": 3000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Holy Aura",
+    "price": {
+      "amount": 1000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Mighty Fortress",
+    "price": {
+      "amount": 500.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Astral Projection",
+    "price": {
+      "amount": 1100.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Gate",
+    "price": {
+      "amount": 5000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Imprisonment",
+    "price": {
+      "amount": 5000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Invulnerability",
+    "price": {
+      "amount": 500.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for Shapechange",
+    "price": {
+      "amount": 1500.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Materials for True Resurrection",
+    "price": {
+      "amount": 25000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Draft Horse",
+    "price": {
+      "amount": 50.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Riding Horse",
+    "price": {
+      "amount": 75.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Mule",
+    "price": {
+      "amount": 8.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Mastiff",
+    "price": {
+      "amount": 25.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Pony",
+    "price": {
+      "amount": 30.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Warhorse",
+    "price": {
+      "amount": 400.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Carriage",
+    "price": {
+      "amount": 100.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Cart",
+    "price": {
+      "amount": 15.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Chariot",
+    "price": {
+      "amount": 250.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Sled",
+    "price": {
+      "amount": 20.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Wagon",
+    "price": {
+      "amount": 35.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Rowboat",
+    "price": {
+      "amount": 50.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Galley",
+    "price": {
+      "amount": 30000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Keelboat",
+    "price": {
+      "amount": 3000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Longship",
+    "price": {
+      "amount": 10000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Sailing Ship",
+    "price": {
+      "amount": 10000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Rowboat",
+    "price": {
+      "amount": 50.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Warship",
+    "price": {
+      "amount": 25000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Exotic Saddle",
+    "price": {
+      "amount": 60.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Feed (per day)",
+    "price": {
+      "amount": 5.0,
+      "currency": "copper"
+    }
+  },
+  {
+    "name": "Military Saddle",
+    "price": {
+      "amount": 20.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Riding Saddle",
+    "price": {
+      "amount": 10.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Stabling (per day)",
+    "price": {
+      "amount": 5.0,
+      "currency": "copper"
+    }
+  },
+  {
+    "name": "Servicio de Mending",
+    "price": {
+      "amount": 30.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Servicio de Ceremony",
+    "price": {
+      "amount": 50.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Servicio de Identify",
+    "price": {
+      "amount": 200.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Servicio de Lesser Restoration",
+    "price": {
+      "amount": 200.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Servicio de Suggestion + Zone of Truth",
+    "price": {
+      "amount": 300.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Servicio de Speak with Dead",
+    "price": {
+      "amount": 300.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Servicio de Revivify",
+    "price": {
+      "amount": 600.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Servicio de Dispel Magic",
+    "price": {
+      "amount": 300.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Servicio de Remove Curse",
+    "price": {
+      "amount": 300.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Servicio de Greater Restoration",
+    "price": {
+      "amount": 2100.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Servicio de Raise Dead",
+    "price": {
+      "amount": 2500.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Padded Armor (Barding)",
+    "price": {
+      "amount": 20.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Leather Armor (Barding)",
+    "price": {
+      "amount": 40.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Studded Leather Armor (Barding)",
+    "price": {
+      "amount": 180.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Hide Armor (Barding)",
+    "price": {
+      "amount": 40.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Chain Shirt (Barding)",
+    "price": {
+      "amount": 200.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Scale Mail (Barding)",
+    "price": {
+      "amount": 200.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Breastplate (Barding)",
+    "price": {
+      "amount": 1600.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Half Plate (Barding)",
+    "price": {
+      "amount": 3000.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Ring Mail (Barding)",
+    "price": {
+      "amount": 120.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Chain Mail (Barding)",
+    "price": {
+      "amount": 300.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Splint Armor (Barding)",
+    "price": {
+      "amount": 800.0,
+      "currency": "gold"
+    }
+  },
+  {
+    "name": "Plate Armor (Barding)",
+    "price": {
+      "amount": 6000.0,
+      "currency": "gold"
+    }
+  }
+]
