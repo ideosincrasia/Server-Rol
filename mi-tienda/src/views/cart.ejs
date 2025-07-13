@@ -34,7 +34,8 @@
   <a href="/shop">← Volver</a>
 
   <script>
-    const productos = <%- JSON.stringify(productos) %>
+    const productos = <%- JSON.stringify(productos) %>;
+
     const cart      = JSON.parse(localStorage.getItem('cart')||'{}')
 
     // construir lista de comprados

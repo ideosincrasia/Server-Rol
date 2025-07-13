@@ -1,99 +1,399 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Tienda DnD</title>
   <style>
-    body { font-family: sans-serif; max-width:1000px; margin:auto; padding:2rem }
-    #categories { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1rem }
-    .tag { padding:.3rem .6rem; border:1px solid#333; border-radius:3px; cursor:pointer; user-select:none }
-    .tag.active { background:#333; color:#fff }
-    #products { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:1rem }
-    .card { border:1px solid #ccc; padding:1rem; border-radius:4px; text-align:center }
-    .card h3 { margin:0 0 .5rem; font-size:1rem }
-    .card p  { margin:0; font-weight:bold }
-    .counter { display:flex; align-items:center; justify-content:center; gap:.5rem; margin-top:.5rem }
-    .counter button { width:1.5rem; height:1.5rem }
+    :root {
+      --bg: #f5f0e1; /* pergamino */
+      --surface: #ffffff;
+      --primary: #800000; /* borgoña */
+      --accent: #daa520; /* dorado */
+      --text: #333333;
+      --muted: #777777;
+      --radius: 12px;
+      --gap: 1rem;
+      --shadow: rgba(0, 0, 0, 0.05);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0 }
+    html, body {
+      height: 100%;
+      font-family: sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .container {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      grid-template-rows: auto 1fr;
+      grid-template-areas:
+        "nav header"
+        "nav main";
+      height: 100vh;
+    }
+    /* NAV */
+    nav {
+      grid-area: nav;
+      background: var(--surface);
+      padding: var(--gap);
+      border-right: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      overflow-y: auto;
+      z-index: 5;
+    }
+    nav h2 {
+      margin-bottom: .75rem;
+      font-size: 1.1rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+    nav .tag {
+      padding: .6rem;
+      background: #f0f0f0;
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-align: center;
+      font-size: .9rem;
+      margin-bottom: .5rem;
+      transition: background .2s, color .2s;
+    }
+    nav .tag.active,
+    nav .tag:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    /* HEADER */
+    header {
+      grid-area: header;
+      background: var(--surface);
+      padding: var(--gap);
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      gap: var(--gap);
+    }
+    #hamburger {
+      display: none;
+      width: 32px; height: 32px;
+      background: var(--primary);
+      border: none; border-radius: 4px;
+      color: #fff; font-size: 1.5rem;
+      cursor: pointer;
+    }
+    #search {
+      flex: 1;
+      padding: .75rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    #search:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(128, 0, 0, 0.2);
+    }
+    /* MAIN */
+    main {
+      grid-area: main;
+      padding: var(--gap);
+      overflow-y: auto;
+      background: var(--bg);
+    }
+    #products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: var(--gap);
+      margin-top: var(--gap);
+    }
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: 0 2px 6px var(--shadow);
+      padding: var(--gap);
+      text-align: center;
+      transition: transform .2s, box-shadow .2s;
+      display: flex; flex-direction: column;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+    .card h3 {
+      font-size: 1rem; margin-bottom: .5rem;
+      color: var(--primary); flex: 1;
+    }
+    .card p { font-weight: bold; margin-bottom: .75rem; }
+    .counter {
+      display: flex; align-items: center; justify-content: center;
+      gap: .5rem;
+    }
+    .counter button {
+      width: 28px; height: 28px;
+      border: none; background: var(--primary);
+      color: #fff; border-radius: 4px;
+      font-size: 1rem; cursor: pointer;
+      transition: background .2s;
+    }
+    .counter button:hover {
+      background: #550000;
+    }
+    .counter span {
+      min-width: 20px; text-align: center; font-weight: 500;
+    }
+    #checkout {
+      display: block; margin: var(--gap) auto 0;
+      padding: .75rem 2rem; background: var(--accent);
+      color: #fff; border: none; border-radius: var(--radius);
+      cursor: pointer; transition: background .2s;
+    }
+    #checkout:hover {
+      background: #b58d1c;
+    }
+    /* CART PANEL */
+    #cart-panel {
+      position: fixed; bottom: var(--gap); right: var(--gap);
+      width: 260px; max-height: 340px; background: var(--surface);
+      border-radius: var(--radius); box-shadow: 0 4px 16px var(--shadow);
+      padding: var(--gap); overflow-y: auto; display: none; z-index: 5;
+    }
+    #cart-panel.show { display: block; z-index: 1; }
+    #cart-panel h2 {
+      margin-bottom: .5rem; font-size: 1.1rem;
+      color: var(--primary); text-align: center;
+    }
+    #cart-table {
+      width: 100%; border-collapse: collapse; margin-bottom: .5rem;
+    }
+    #cart-table th,
+    #cart-table td {
+      padding: .25rem .5rem; font-size: .85rem;
+    }
+    #cart-table th {
+      font-weight: 600; color: var(--muted);
+    }
+    #cart-total {
+      text-align: right; font-weight: 600; margin-bottom: .5rem;
+    }
+    /* inc/dec inline, styled */
+    #cart-table td.controls {
+      display: flex; justify-content: flex-end; align-items: center; gap: .25rem;
+    }
+    #cart-table .inc,
+    #cart-table .dec {
+      width: 24px; height: 24px;
+      border: none; background: var(--primary);
+      color: #fff; border-radius: 4px;
+      font-size: .9rem; cursor: pointer;
+      transition: background .2s;
+    }
+    #cart-table .inc:hover,
+    #cart-table .dec:hover {
+      background: #550000;
+    }
+    #cart-actions {
+      display: flex; gap: .5rem; margin-top: .5rem;
+    }
+    #cart-actions button {
+      flex: 1; padding: .5rem; border: none;
+      background: var(--primary); color: #fff;
+      border-radius: var(--radius); cursor: pointer;
+      font-size: .9rem; transition: background .2s;
+    }
+    #cart-actions button:hover {
+      background: #550000;
+    }
+
+    /* Responsive: hamburger */
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "header"
+          "main";
+      }
+      #hamburger { display: block }
+      nav {
+        position: fixed; top: 0; left: -220px;
+        width: 200px; height: 100%; transition: left .3s;
+      }
+      nav.show { left: 0 }
+    }
   </style>
 </head>
 <body>
-  <h1>Tienda de Rol DnD</h1>
+  <div class="container">
+    <!-- NAV -->
+    <nav id="sidebar">
+      <h2>Categorías</h2>
+      <div class="tag active" data-cat="All">Todos</div>
+      <% categorias.forEach(cat => { %>
+        <div class="tag" data-cat="<%= cat %>"><%= cat %></div>
+      <% }) %>
+    </nav>
 
-  <div id="categories">
-    <div class="tag active" data-cat="All">Todos</div>
-    <% categorias.forEach(cat=>{ %>
-      <div class="tag" data-cat="<%=cat%>"><%=cat%></div>
-    <% }) %>
-  </div>
+    <!-- HEADER -->
+    <header>
+      <button id="hamburger">☰</button>
+      <input id="search" type="text" placeholder="Buscar productos..." />
+    </header>
 
-  <div id="products">
-    <% productos.forEach(item=>{ %>
-      <div class="card" data-cat="<%=item.category%>" 
-           data-name="<%=item.name%>"
-           data-price-amount="<%=item.marketPrice.amount%>"
-           data-price-currency="<%=item.marketPrice.currency%>">
-        <h3><%=item.name%></h3>
-        <p><%=item.marketPrice.amount%> <%=item.marketPrice.currency%></p>
-        <div class="counter">
-          <button class="minus">-</button>
-          <span class="count">0</span>
-          <button class="plus">+</button>
-        </div>
+    <!-- PRODUCTOS -->
+    <main>
+      <div id="products">
+        <% productos.forEach(item => { %>
+          <div class="card"
+               data-cat="<%= item.category %>"
+               data-name="<%= item.name.toLowerCase() %>"
+               data-price-currency="<%= item.marketPrice.currency %>">
+            <h3><%= item.name %></h3>
+            <p><%= item.marketPrice.amount %> <%= item.marketPrice.currency %></p>
+            <div class="counter" data-name="<%= item.name %>">
+              <button class="minus">−</button>
+              <span class="count">0</span>
+              <button class="plus">+</button>
+            </div>
+          </div>
+        <% }) %>
       </div>
-    <% }) %>
+    </main>
   </div>
 
-  <button id="checkout" style="margin-top:2rem">Ver carrito</button>
+  <!-- CART PANEL -->
+  <aside id="cart-panel">
+    <h2>Carrito</h2>
+    <table id="cart-table">
+      <thead><tr><th>Item</th><th></th></tr></thead>
+      <tbody id="cart-body"></tbody>
+    </table>
+    <div id="cart-total">Total: 0 oro</div>
+    <div id="cart-actions">
+      <button id="goto-cart">Detalles</button>
+      <button id="clear-cart">Vaciar</button>
+    </div>
+  </aside>
 
   <script>
-    const tags  = document.querySelectorAll('.tag')
-    const cards = document.querySelectorAll('.card')
-    const cart  = JSON.parse(localStorage.getItem('cart')||'{}')
+    const sidebar = document.getElementById('sidebar');
+    const hamburger = document.getElementById('hamburger');
+    hamburger.addEventListener('click', ()=> sidebar.classList.toggle('show'));
 
-    // inicializar contadores
+    // close sidebar when clicking outside
+    document.addEventListener('click', e => {
+      if (sidebar.classList.contains('show') &&
+         !sidebar.contains(e.target) &&
+         e.target !== hamburger) {
+        sidebar.classList.remove('show');
+      }
+    });
+
+    const tags      = document.querySelectorAll("nav .tag");
+    const cards     = document.querySelectorAll(".card");
+    const search    = document.getElementById("search");
+    const checkout  = document.getElementById("checkout");
+    const panel     = document.getElementById("cart-panel");
+    const bodyTbl   = document.getElementById("cart-body");
+    const totalEl   = document.getElementById("cart-total");
+    const clearBtn  = document.getElementById("clear-cart");
+    const gotoBtn   = document.getElementById("goto-cart");
+    let cart        = JSON.parse(localStorage.getItem("cart") || "{}");
+    let currentCat  = "All";
+
+    function filterCards() {
+      const term = search.value.trim().toLowerCase();
+      cards.forEach(card => {
+        const okCat = currentCat === "All" || card.dataset.cat === currentCat;
+        const okTxt = !term || card.dataset.name.includes(term);
+        card.style.display = okCat && okTxt ? "" : "none";
+      });
+    }
+    tags.forEach(tag => tag.addEventListener("click", ()=>{
+      tags.forEach(t=>t.classList.remove("active"));
+      tag.classList.add("active");
+      currentCat = tag.dataset.cat;
+      filterCards();
+    }));
+    search.addEventListener("input", filterCards);
+
+    function updateCartPanel() {
+      bodyTbl.innerHTML = "";
+      let copper=0, has=false;
+      cards.forEach(card=>{
+        const name = card.querySelector(".counter").dataset.name;
+        const qty  = cart[name]||0;
+        if(!qty) return;
+        has = true;
+        const amt = parseFloat(card.querySelector("p").textContent);
+        const mul = card.dataset.priceCurrency==='oro'?100:10;
+        copper += amt*mul*qty;
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${name}</td>
+          <td class="controls">
+            <button class="dec" data-name="${name}">−</button>
+            <span>${qty}</span>
+            <button class="inc" data-name="${name}">+</button>
+          </td>`;
+        bodyTbl.appendChild(tr);
+      });
+      panel.classList.toggle("show", has);
+      totalEl.textContent = `Total: ${Math.floor(copper/100)} oro`;
+
+      document.querySelectorAll("#cart-body .inc").forEach(btn=>{
+        btn.onclick = ()=>{
+          const n = btn.dataset.name;
+          cart[n] = (cart[n]||0)+1;
+          localStorage.setItem("cart", JSON.stringify(cart));
+          document.querySelector(`.card[data-name="${n.toLowerCase()}"] .count`)
+            .textContent = cart[n];
+          updateCartPanel();
+        };
+      });
+      document.querySelectorAll("#cart-body .dec").forEach(btn=>{
+        btn.onclick = ()=>{
+          const n = btn.dataset.name;
+          if((cart[n]||0)>0) cart[n]--;
+          localStorage.setItem("cart", JSON.stringify(cart));
+          document.querySelector(`.card[data-name="${n.toLowerCase()}"] .count`)
+            .textContent = cart[n];
+          updateCartPanel();
+        };
+      });
+    }
     cards.forEach(card=>{
-      const name = card.dataset.name
-      const cnt  = cart[name]||0
-      card.querySelector('.count').textContent = cnt
-    })
-
-    // filtrar categoría
-    tags.forEach(tag=>{
-      tag.addEventListener('click',()=>{
-        tags.forEach(t=>t.classList.remove('active'))
-        tag.classList.add('active')
-        const cat = tag.dataset.cat
-        cards.forEach(c=>{
-          c.style.display = (cat==='All'||c.dataset.cat===cat)?'':'none'
-        })
-      })
-    })
-
-    // + / – en carrito
-    cards.forEach(card=>{
-      const name = card.dataset.name
-      const btnPlus  = card.querySelector('.plus')
-      const btnMinus = card.querySelector('.minus')
-      const spanCnt  = card.querySelector('.count')
-
-      btnPlus.addEventListener('click',()=>{
-        cart[name] = (cart[name]||0) + 1
-        spanCnt.textContent = cart[name]
-        localStorage.setItem('cart', JSON.stringify(cart))
-      })
-      btnMinus.addEventListener('click',()=>{
-        if((cart[name]||0)>0){
-          cart[name]--
-          spanCnt.textContent = cart[name]
-          localStorage.setItem('cart', JSON.stringify(cart))
+      const ctr = card.querySelector(".counter");
+      const n   = ctr.dataset.name;
+      const sp  = ctr.querySelector(".count");
+      ctr.querySelector(".plus").onclick = ()=>{
+        cart[n] = (cart[n]||0)+1;
+        sp.textContent = cart[n];
+        localStorage.setItem("cart", JSON.stringify(cart));
+        updateCartPanel();
+      };
+      ctr.querySelector(".minus").onclick = ()=>{
+        if((cart[n]||0)>0){
+          cart[n]--;
+          sp.textContent = cart[n];
+          localStorage.setItem("cart", JSON.stringify(cart));
+          updateCartPanel();
         }
-      })
-    })
-
-    // ir a /cart
-    document.getElementById('checkout')
-      .addEventListener('click',()=> location.href='/cart')
+      };
+    });
+    checkout.addEventListener("click", updateCartPanel);
+    gotoBtn.addEventListener("click", ()=> location.href = '/cart');
+    clearBtn.addEventListener("click", ()=>{
+      Object.keys(cart).forEach(k=>cart[k]=0);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      document.querySelectorAll(".count").forEach(el=>el.textContent=0);
+      updateCartPanel();
+    });
+    filterCards();
+    updateCartPanel();
   </script>
 </body>
 </html>
