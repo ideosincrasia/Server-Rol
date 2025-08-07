@@ -14,7 +14,7 @@
       --muted: #777777;
       --radius: 12px;
       --gap: 1rem;
-      --shadow: rgba(0, 0, 0, 0.05);
+      --shadow: rgba(0, 0, 0, 0.5);
     }
     * { box-sizing: border-box; margin: 0; padding: 0 }
     html, body {
@@ -146,21 +146,12 @@
     .counter span {
       min-width: 20px; text-align: center; font-weight: 500;
     }
-    #checkout {
-      display: block; margin: var(--gap) auto 0;
-      padding: .75rem 2rem; background: var(--accent);
-      color: #fff; border: none; border-radius: var(--radius);
-      cursor: pointer; transition: background .2s;
-    }
-    #checkout:hover {
-      background: #b58d1c;
-    }
     /* CART PANEL */
     #cart-panel {
       position: fixed; bottom: var(--gap); right: var(--gap);
-      width: 260px; max-height: 340px; background: var(--surface);
-      border-radius: var(--radius); box-shadow: 0 4px 16px var(--shadow);
-      padding: var(--gap); overflow-y: auto; display: none; z-index: 5;
+      max-height: 340px; background: var(--surface);
+      border-radius: var(--radius); box-shadow: 4px 8px 16px var(--shadow);
+      padding: calc(var(--gap) + 1rem); overflow-y: auto; display: none; z-index: 5;
     }
     #cart-panel.show { display: block; z-index: 1; }
     #cart-panel h2 {
@@ -268,10 +259,10 @@
   <aside id="cart-panel">
     <h2>Carrito</h2>
     <table id="cart-table">
-      <thead><tr><th>Item</th><th></th></tr></thead>
+      <thead><tr><th>Item</th><th>.ctn</th></tr></thead>
       <tbody id="cart-body"></tbody>
     </table>
-    <div id="cart-total">Total: 0 oro</div>
+    <div id="cart-total"></div>
     <div id="cart-actions">
       <button id="goto-cart">Detalles</button>
       <button id="clear-cart">Vaciar</button>
@@ -295,7 +286,6 @@
     const tags      = document.querySelectorAll("nav .tag");
     const cards     = document.querySelectorAll(".card");
     const search    = document.getElementById("search");
-    const checkout  = document.getElementById("checkout");
     const panel     = document.getElementById("cart-panel");
     const bodyTbl   = document.getElementById("cart-body");
     const totalEl   = document.getElementById("cart-total");
@@ -303,6 +293,21 @@
     const gotoBtn   = document.getElementById("goto-cart");
     let cart        = JSON.parse(localStorage.getItem("cart") || "{}");
     let currentCat  = "All";
+
+    addEventListener("DOMContentLoaded", ()=>{
+      // Initialize cart from localStorage
+      if (!cart || typeof cart !== 'object') {
+        cart = {};
+        localStorage.setItem("cart", JSON.stringify(cart));
+      }
+      // Update counters
+      cards.forEach(card => {
+        const name = card.dataset.name;
+        const count = cart[name] || 0;
+        card.querySelector(".count").textContent = count;
+      });
+      updateCartPanel();
+    });
 
     function filterCards() {
       const term = search.value.trim().toLowerCase();
@@ -322,15 +327,17 @@
 
     function updateCartPanel() {
       bodyTbl.innerHTML = "";
-      let copper=0, has=false;
+      console.log("Actualizando carrito...");
+      let value=0, has=false;
       cards.forEach(card=>{
         const name = card.querySelector(".counter").dataset.name;
         const qty  = cart[name]||0;
         if(!qty) return;
         has = true;
         const amt = parseFloat(card.querySelector("p").textContent);
-        const mul = card.dataset.priceCurrency==='oro'?100:10;
-        copper += amt*mul*qty;
+        const mul = card.dataset.priceCurrency==='gold'?100: card.dataset.priceCurrency==='silver'?10 : 1;
+        value += amt*mul*qty;
+        console.log(name,card.dataset.priceCurrency, qty, amt, mul);
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${name}</td>
@@ -341,9 +348,15 @@
           </td>`;
         bodyTbl.appendChild(tr);
       });
-      panel.classList.toggle("show", has);
-      totalEl.textContent = `Total: ${Math.floor(copper/100)} oro`;
 
+      panel.classList.toggle("show", has);
+          const gp = Math.floor(value/100)
+          let rem = value % 100
+          const sp = Math.floor(rem/10)
+          const cp = rem % 10
+      totalEl.textContent = `Total: ${gp} oro, ${sp} plata, ${cp} cobre`;
+
+      // Add event listeners for increment/decrement buttons
       document.querySelectorAll("#cart-body .inc").forEach(btn=>{
         btn.onclick = ()=>{
           const n = btn.dataset.name;
@@ -365,6 +378,8 @@
         };
       });
     }
+
+    // Initialize counters
     cards.forEach(card=>{
       const ctr = card.querySelector(".counter");
       const n   = ctr.dataset.name;
@@ -384,7 +399,8 @@
         }
       };
     });
-    checkout.addEventListener("click", updateCartPanel);
+
+    // Cards Buttons
     gotoBtn.addEventListener("click", ()=> location.href = '/cart');
     clearBtn.addEventListener("click", ()=>{
       Object.keys(cart).forEach(k=>cart[k]=0);

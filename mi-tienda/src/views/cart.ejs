@@ -54,7 +54,7 @@
     let totalCopper = 0
     bought.forEach(item => {
       const { amount, currency } = item.price
-      const mul = currency==='oro'?100 : currency==='plata'?10 : 1
+      const mul = currency==='gold'?100 : currency==='silver'?10 : 1
       totalCopper += amount * mul * item.count
     })
     const gp = Math.floor(totalCopper/100)
