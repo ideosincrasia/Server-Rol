@@ -6,9 +6,9 @@
   <title>Tienda DnD</title>
   <style>
     :root {
-      --bg: #f5f0e1; /* pergamino */
+      --bg: #e7e7e7; /* pergamino */
       --surface: #ffffff;
-      --primary: #800000; /* borgoña */
+      --primary: #a36b03; /* oro */
       --accent: #daa520; /* dorado */
       --text: #333333;
       --muted: #777777;
@@ -23,6 +23,7 @@
       background: var(--bg);
       color: var(--text);
     }
+    
     .container {
       display: grid;
       grid-template-columns: 200px 1fr;
@@ -141,7 +142,7 @@
       transition: background .2s;
     }
     .counter button:hover {
-      background: #550000;
+      background: var(--accent);
     }
     .counter span {
       min-width: 20px; text-align: center; font-weight: 500;
@@ -185,7 +186,7 @@
     }
     #cart-table .inc:hover,
     #cart-table .dec:hover {
-      background: #550000;
+      background: var(--accent);
     }
     #cart-actions {
       display: flex; gap: .5rem; margin-top: .5rem;
@@ -197,7 +198,7 @@
       font-size: .9rem; transition: background .2s;
     }
     #cart-actions button:hover {
-      background: #550000;
+      background: var(--accent);
     }
 
     /* Responsive: hamburger */
@@ -345,7 +346,6 @@
 
     function updateCartPanel() {
       bodyTbl.innerHTML = "";
-      console.log("Actualizando carrito...");
       let value=0, has=false;
       cards.forEach(card=>{
         const name = card.querySelector(".counter").dataset.name;
@@ -355,7 +355,6 @@
         const amt = parseFloat(card.querySelector("p").textContent);
         const mul = card.dataset.priceCurrency==='gold'?100: card.dataset.priceCurrency==='silver'?10 : 1;
         value += amt*mul*qty;
-        console.log(name,card.dataset.priceCurrency, qty, amt, mul);
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${name}</td>
