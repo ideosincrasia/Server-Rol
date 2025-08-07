@@ -264,7 +264,7 @@
     </table>
     <div id="cart-total"></div>
     <div id="cart-actions">
-      <button id="goto-cart">Detalles</button>
+      <button id="goto-cart">Comprar</button>
       <button id="clear-cart">Vaciar</button>
     </div>
   </aside>
@@ -308,6 +308,24 @@
       });
       updateCartPanel();
     });
+
+    function generateDiscordMessage() {
+      const productos = <%- JSON.stringify(productos) %>;
+
+      const bought = productos
+        .filter(p => cart[p.name] > 0)
+        .map(p => ({
+          name: p.name,
+          count: cart[p.name],
+          price: p.marketPrice
+        }))
+
+      const name = '[Nombre del personaje]'
+      const lines = bought.map(i => `- ${i.count} ${i.name}`)
+      const msg = `${name} compra:\n${lines.join('\n')}`
+      
+      return msg;
+    }
 
     function filterCards() {
       const term = search.value.trim().toLowerCase();
@@ -401,7 +419,17 @@
     });
 
     // Cards Buttons
-    gotoBtn.addEventListener("click", ()=> location.href = '/cart');
+    gotoBtn.addEventListener("click", ()=> {
+    window.location.href = 'discord://discord.com/channels/1302041074092478555/1303562045811326996';
+          const txt = generateDiscordMessage();
+      if (!txt) return
+      navigator.clipboard.writeText(txt).then(() => {
+        const btn = document.getElementById('goto-cart');
+        btn.textContent = 'Comprado!';
+        setTimeout(() => btn.textContent = 'Detalles', 1500);
+      });
+    });
+
     clearBtn.addEventListener("click", ()=>{
       Object.keys(cart).forEach(k=>cart[k]=0);
       localStorage.setItem("cart", JSON.stringify(cart));
