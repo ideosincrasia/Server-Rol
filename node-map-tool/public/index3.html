@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <title>Public + Private Map (Discord optional)</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <style>
+    html, body { height:100%; margin:0; overflow:hidden; }
+    #map { position:fixed; inset:0; background:#000; height:100vh; height:100svh; height:100dvh; }
+    #bar { position:absolute; top:10px; right:10px; z-index:1000; background:rgba(255,255,255,.95);
+           padding:8px 10px; border-radius:8px; font:14px/1.2 system-ui,sans-serif; display:flex; gap:8px; align-items:center; }
+    button { font:inherit; }
+  </style>
+</head>
+<body>
+  <div id="bar">
+    <span id="status">Loading public pito...</span>
+    <button id="login"  style="display:none">Login with Discord</button>
+    <button id="logout" style="display:none">Logout</button>
+    <button id="secret" style="display:none">Show secret map</button>
+    <button id="back"   style="display:none">Back to public</button>
+  </div>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    let map, layerPublic, layerSecret;
+
+    function fit(bounds) {
+      const coverZ = map.getBoundsZoom(bounds, { inside:false });
+      map.setMinZoom(coverZ);
+      if (map.getZoom() < coverZ) map.setZoom(coverZ, { animate:false });
+      map.setView(bounds.getCenter(), Math.max(map.getZoom(), coverZ), { animate:false });
+      map.setMaxBounds(bounds.pad(0.02));
+    }
+
+    async function loadPublic() {
+      const meta = await (await fetch('/map-meta-public')).json();
+      const b = L.latLngBounds([[0,0],[meta.height, meta.width]]);
+      layerPublic = L.tileLayer(`/tiles/public/{z}/{x}/{y}.png?expires=${meta.expires}&sig=${meta.sig}`, {
+        tileSize: meta.tileSize, minZoom: 0, maxZoom: meta.maxZoom, noWrap: true, bounds: b
+      }).addTo(map);
+      fit(b);
+    }
+
+    async function loadSecret() {
+      const r = await fetch('/map-meta-secret');
+      if (!r.ok) {
+        alert('You must login and have the required role to see the secret map.');
+        return false;
+      }
+      const meta = await r.json();
+      const b = L.latLngBounds([[0,0],[meta.height, meta.width]]);
+      layerSecret = L.tileLayer(`/tiles/${meta.map}/{z}/{x}/{y}.png?expires=${meta.expires}&sig=${meta.sig}`, {
+        tileSize: meta.tileSize, minZoom: 0, maxZoom: meta.maxZoom, noWrap: true, bounds: b
+      }).addTo(map);
+      fit(b);
+      return true;
+    }
+
+    async function boot() {
+      map = L.map('map', { crs: L.CRS.Simple, zoomSnap: 0, zoomDelta: 0.5 });
+
+      // Public map first (no auth)
+      await loadPublic();
+      document.getElementById('status').textContent = 'Public map (no login)';
+
+      // Session status
+      const meRes = await fetch('/api/me');
+      const me = meRes.ok ? await meRes.json() : { ok:false };
+
+      const loginBtn  = document.getElementById('login');
+      const logoutBtn = document.getElementById('logout');
+      const secretBtn = document.getElementById('secret');
+      const backBtn   = document.getElementById('back');
+
+      if (!me.ok) {
+        loginBtn.style.display = 'inline-block';
+        loginBtn.onclick = () => location.href = '/login';
+      } else {
+        logoutBtn.style.display = 'inline-block';
+        logoutBtn.onclick = () => location.href = '/logout';
+        if (me.isPriv) {
+          secretBtn.style.display = 'inline-block';
+          secretBtn.onclick = async () => {
+            if (layerSecret) map.removeLayer(layerSecret);
+            const ok = await loadSecret();
+            if (ok) {
+              if (layerPublic) map.removeLayer(layerPublic);
+              secretBtn.style.display = 'none';
+              backBtn.style.display = 'inline-block';
+              document.getElementById('status').textContent = `Secret map (hello ${me.user.username})`;
+            }
+          };
+          backBtn.onclick = () => {
+            if (layerSecret) { map.removeLayer(layerSecret); layerSecret = null; }
+            if (!layerPublic) loadPublic();
+            backBtn.style.display = 'none';
+            secretBtn.style.display = 'inline-block';
+            document.getElementById('status').textContent = 'Public map (no login)';
+          };
+        }
+      }
+
+      addEventListener('resize', () => fit(map.getBounds()));
+      addEventListener('orientationchange', () => fit(map.getBounds()));
+    }
+
+    boot().catch(e => console.error(e));
+  </script>
+</body>
+</html>
