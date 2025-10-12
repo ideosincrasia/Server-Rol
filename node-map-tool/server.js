@@ -28,7 +28,7 @@ app.use(session({
   cookie: { httpOnly: true, sameSite: 'lax' }
 }));
 
-// ---- Image paths (keep these OUT of /public) ----
+// ---- Image paths ----
 const MAPS = {
   public: path.resolve(PUBLIC_MASTER || 'private/world-public.png'),
   secret: path.resolve(SECRET_MASTER || 'private/world-secret.png'),
@@ -145,4 +145,4 @@ app.get('/img/secret', (req, res) => {
 // ---- Static front-end (your updated index2.html) ----
 app.use(express.static(path.join(__dirname, 'public'), { extensions: ['html'] }));
 
-app.listen(PORT, () => console.log(`✅ http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`http://localhost:${PORT}`));

@@ -23,7 +23,7 @@
   </style>
 </head>
 <body>
-  <div id="bar">
+  <div id="bar" style="display:none;">
     <span id="status">Loading…</span>
     <button id="login"  style="display:none">Login with Discord</button>
     <button id="logout" style="display:none">Logout</button>
@@ -38,7 +38,7 @@
   <script>
     // ====================== YOUR HEX CONFIG (kept) ======================
     const HEX = { orientation: 'pointy', size: 65, origin: { x: 226, y: 6045 } };
-    const COVER = { allowExtraZoomOutLevels: 0 };
+    const COVER = { allowExtraZoomOutLevels: 1 };
     const LABEL = { xOffset: -1, yOffset: 1, yScale: -1, xIndexMethod: 'round' };
     // ===================================================================
 
@@ -153,7 +153,7 @@
       }
 
       // ---------- UI: hover + click ----------
-      const hoverHex = L.polygon([], { weight: 1, color: '#00A', fillOpacity: 0.08 }).addTo(map);
+      const hoverHex = L.polygon([], { weight: 1, color: '#60A5FA', fillColor: '60A5FA', fillOpacity: 0.10 }).addTo(map);
       const tip = L.tooltip({ opacity: 0.9, direction: 'top' });
       let lastClick = null;
 
@@ -171,11 +171,172 @@
       map.on('click', (e) => {
         const px = e.latlng.lng, py = e.latlng.lat;
         const { q, r } = axialRound(...Object.values(pixelToAxial(px, py)));
-        const c = axialToPixel(q, r);
-        const { X, Y } = finalCoordLabel(q, r);
-        lastClick = { lat: c.y, lng: c.x };
-        L.marker([c.y, c.x]).addTo(map).bindPopup(`Hex: <b>${X}${Y}</b><br>(q=${q}, r=${r})`).openPopup();
+
+        // Hold Alt/Ctrl/⌘ to remove; plain click to add (or toggle if you prefer)
+        const removeMode = e.originalEvent.altKey || e.originalEvent.ctrlKey || e.originalEvent.metaKey;
+
+        if (removeMode) {
+          removeSelected(q, r);
+        } else {
+          toggleSelected(q,r);        // or: toggleSelected(q, r);
+        }
       });
+
+      // Helpers to track selected hexs
+        const selectedLayer = L.layerGroup().addTo(map);
+        const selectedHexes = new Map();           // key "q,r" -> { layer, q, r }
+
+        const hexKey = (q, r) => `${q},${r}`;
+        const hexLatLngs = (q, r) => hexCornersFor(q, r).map(p => [p.y, p.x]);
+
+        function addSelected(q, r) {
+          const key = hexKey(q, r);
+          if (selectedHexes.has(key)) return;
+          const poly = L.polygon(hexLatLngs(q, r), {
+            weight: 1.25,
+            color: '#1E40AF',
+            fillColor: '#60A5FA',
+            fillOpacity: 0.35,
+            interactive: false
+          }).addTo(selectedLayer);
+          selectedHexes.set(key, { layer: poly, q, r });
+        }
+
+        function removeSelected(q, r) {
+          const key = hexKey(q, r);
+          const entry = selectedHexes.get(key);
+          if (!entry) return;
+          selectedLayer.removeLayer(entry.layer);
+          selectedHexes.delete(key);
+        }
+
+        function toggleSelected(q, r) {
+          if (selectedHexes.has(hexKey(q, r))) removeSelected(q, r);
+          else addSelected(q, r);
+        }
+
+/* ===========================
+     PUNTOS DE INTERÉS (POI) 
+     Refer to : /data/puntos_interes.json
+    =========================== */
+
+      (function () {
+        // ---------- CONFIG ----------
+        const SOURCE_JSON = '/data/puntos_interes.json'; // cambia la ruta si quieres
+        const ICON_W = 126, ICON_H = 126;                  // tamaño del icono
+        const AUTO_FIT_AFTER_LOAD = true;               // true => encaja vista tras cargar
+
+        // ---------- PRECHECK ----------
+        const _map = (typeof map !== 'undefined') ? map : (window && window.map);
+        if (!window.L || !_map) {
+          console.warn('[POI] No se encontró Leaflet o el mapa (`map`). Coloca este bloque tras crear el mapa.');
+          return;
+        }
+
+        // ---------- CAPA + ESTADO ----------
+        const layer = L.layerGroup().addTo(_map);
+        const registry = new Map(); // id -> marker
+
+        // ---------- HELPERS ----------
+        function buildIcon(url) {
+          const fallbackSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="${ICON_W}" height="${ICON_H}">
+            <circle cx="${ICON_W/2}" cy="${ICON_H/2}" r="${Math.min(ICON_W,ICON_H)/2 - 4}" fill="#60A5FA" stroke="#1E40AF" stroke-width="2"/>
+          </svg>`;
+          const dataURL = 'data:image/svg+xml;utf8,' + encodeURIComponent(fallbackSVG);
+          return L.icon({
+            iconUrl: url || dataURL,
+            iconSize: [ICON_W, ICON_H],
+            iconAnchor: [Math.round(ICON_W/2), ICON_H]
+          });
+        }
+
+        function toLatLng(poi) {
+          if (poi && poi.xy && Number.isFinite(poi.xy.x) && Number.isFinite(poi.xy.y)) {
+            // CRS.Simple => [lat=y, lng=x]
+            return L.latLng(poi.xy.y, poi.xy.x);
+          }
+          return null;
+        }
+
+        function popupHTML(poi) {
+          const nombre = poi.nombre || poi.id || 'Punto';
+          const desc = poi.descripcion ? `<div style="margin-top:6px">${poi.descripcion}</div>` : '';
+          const img = poi.icono ? `<img src="${poi.icono}" style="width:40px;height:40px;object-fit:contain;margin-right:8px;vertical-align:middle">` : '';
+          return `<div style="display:flex;align-items:center">${img}<div><b>${nombre}</b>${desc}</div></div>`;
+        }
+
+        // ---------- API ----------
+        function add(poi) {
+          if (!poi) return null;
+          if (!poi.id) poi.id = 'poi_' + Math.random().toString(36).slice(2, 9);
+
+          // actualizar existente
+          if (registry.has(poi.id)) {
+            const mk = registry.get(poi.id);
+            const ll = toLatLng(poi);
+            if (!ll) { console.warn(`[POI] '${poi.id}' sin xy válidos`); return mk; }
+            mk.setLatLng(ll);
+            mk.setIcon(buildIcon(poi.icono));
+            mk._poi = poi;
+            return mk;
+          }
+
+          const latlng = toLatLng(poi);
+          if (!latlng) {
+            console.warn(`[POI] '${poi.id}' sin coordenadas válidas. Usa {xy:{x,y}}`);
+            return null;
+          }
+
+          const marker = L
+            .marker(latlng, { icon: buildIcon(poi.icono) })
+            .bindPopup(popupHTML(poi))
+            .addTo(layer);
+
+          marker._poi = poi;
+          registry.set(poi.id, marker);
+          return marker;
+        }
+
+        function clear() {
+          layer.clearLayers();
+          registry.clear();
+        }
+
+        async function load(source = SOURCE_JSON) {
+          try {
+            const res = await fetch(source, { cache: 'no-store' });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const data = await res.json();
+            clear();
+            (Array.isArray(data) ? data : []).forEach(add);
+            console.log(`[POI] Cargados ${registry.size} puntos.`);
+            if (AUTO_FIT_AFTER_LOAD) fit();
+          } catch (err) {
+            console.error('[POI] Error cargando', source, err);
+          }
+        }
+
+        function list() {
+          return Array.from(registry.values()).map(mk => mk._poi);
+        }
+
+        function fit(ids) {
+          const pts = [];
+          if (!ids) {
+            layer.eachLayer(l => pts.push(l.getLatLng()));
+          } else {
+            (Array.isArray(ids) ? ids : [ids]).forEach(id => {
+              const mk = registry.get(id);
+              if (mk) pts.push(mk.getLatLng());
+            });
+          }
+          if (pts.length) _map.fitBounds(L.latLngBounds(pts), { padding: [20,20] });
+        }
+
+        // ---------- EXPONER Y ARRANCAR ----------
+        window.poi = { add, clear, load, list, fit, layer };
+        load(); // carga automática desde SOURCE_JSON
+      })();
 
       // Console helpers
       window.hex = {
@@ -188,6 +349,7 @@
       };
     }
 
+    
     // ---- Boot flow: public first (no login), then optionally secret ----
     async function boot() {
       // Public map (no auth)
