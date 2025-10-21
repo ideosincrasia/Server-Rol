@@ -9,7 +9,7 @@ COPY . .
 
 # 2. Etapa de ejecución, imagen más ligera
 FROM node:18-alpine
-WORKDIR /app
+WORKDIR /
 
 COPY --from=builder / ./
 
