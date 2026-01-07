@@ -157,6 +157,7 @@
       const tip = L.tooltip({ opacity: 0.9, direction: 'top' });
       let lastClick = null;
 
+      // Mouse move: update hover hex + tooltip + coords display
       map.on('mousemove', (e) => {
         const px = e.latlng.lng, py = e.latlng.lat;
         const { q, r } = axialRound(...Object.values(pixelToAxial(px, py)));
@@ -168,6 +169,7 @@
         $('coords').textContent = `X: ${px.toFixed(1)}  Y: ${py.toFixed(1)}  |  q=${q} r=${r}  |  ${X}${Y}`;
       });
 
+      // Click: add/remove selected hexes
       map.on('click', (e) => {
         const px = e.latlng.lng, py = e.latlng.lat;
         const { q, r } = axialRound(...Object.values(pixelToAxial(px, py)));
@@ -185,6 +187,7 @@
       // Helpers to track selected hexs
         const selectedLayer = L.layerGroup().addTo(map);
         const selectedHexes = new Map();           // key "q,r" -> { layer, q, r }
+        const lastSelectHex = null;
 
         const hexKey = (q, r) => `${q},${r}`;
         const hexLatLngs = (q, r) => hexCornersFor(q, r).map(p => [p.y, p.x]);
@@ -222,8 +225,8 @@
 
       (function () {
         // ---------- CONFIG ----------
-        const SOURCE_JSON = '/data/puntos_interes.json'; // cambia la ruta si quieres
-        const ICON_W = 126, ICON_H = 126;                  // tamaño del icono
+        const SOURCE_JSON = '/data/puntos_interes.json';
+        const ICON_W = 100, ICON_H = ICON_W;                  // tamaño del icono
         const AUTO_FIT_AFTER_LOAD = true;               // true => encaja vista tras cargar
 
         // ---------- PRECHECK ----------
