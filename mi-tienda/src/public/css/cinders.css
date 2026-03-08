@@ -1,0 +1,35 @@
+/* Cinder Particle Container */
+#cinders-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+/* Individual Cinder Particle */
+.cinder {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffb700, #ff4500);
+  box-shadow: 10px 0 300px #ff4500;
+  opacity: 0;
+  animation: cinder-drift linear infinite;
+}
+
+@keyframes cinder-drift {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(var(--move-x), var(--move-y)) rotate(var(--rotation));
+    opacity: 0;
+  }
+}

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/new-shop.css">
+    <link rel="stylesheet" href="/css/cinders.css">
+    <title>Shop</title>
+</head>
+<body>
+    <div id="hamburger-btn" class="hamburger-menu">
+        <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </div>
+    <nav>
+        <div class="close-menu-btn">
+            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </div>
+        <div class="logo-cont">
+            <img src="img/logoBanner.png" alt="Logo de la Sombra del Fenix">
+            <span>Mercado</span>
+        </div>
+        <div class="cat-cont">
+          <% categorias.forEach(cat => { %>
+            <div class="cat" data-cat="<%= cat %>"><%= cat %></div>
+          <% }) %>  
+        </div>
+    </nav>
+
+    <div class="header-banners">
+        <a href="/mapa" class="banner-item" style="--bg-img: linear-gradient(to bottom, #1e3c72, #2a5298)">
+            <div class="text">
+                <h4>MAP</h4>
+            </div>
+            <div class="icon">
+                <svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
+            </div>
+        </a>
+    </div>
+
+    <header class="top-bar">
+        <div class="search-box">
+            <input type="text" placeholder="Search...">
+            <svg class="search-icon" viewBox="0 0 24 24">
+                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            </svg>
+        </div>
+        <div class="player-name-box">
+            <input type="text" placeholder="Player Name">
+            <svg class="user-icon" viewBox="0 0 24 24">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+        </div>
+        
+    </header>
+
+    <main class="content">
+        <% 
+        function getCoins(cost) {
+            let totalCp = Math.round(cost * 100);
+            let gp = Math.floor(totalCp / 100);
+            let sp = Math.floor((totalCp % 100) / 10);
+            let cp = totalCp % 10;
+            return { gp, sp, cp };
+        }
+
+        function renderItems(obj) {
+            for (let key in obj) {
+                if (Array.isArray(obj[key])) {
+                    let categoryName = key;
+                    let items = obj[key];
+                    items.forEach(item => {
+                        let coins = getCoins(item.cost);
+                        let cleanType = item.type ? item.type.split('|')[0] : '';
+        %>
+            <div class="product-card" data-category="<%= categoryName %>" data-name="<%= item.name %>" data-cost="<%= item.cost %>" style="background-image: url('/img/categories/<%= categoryName %>.jpg');" onclick="addToCart(this.dataset.name, parseFloat(this.dataset.cost))">
+                <div class="card-overlay">
+                    <div class="card-header">
+                        <h4 class="category-subtitle"><%= categoryName.replace(/([A-Z])/g, ' $1').trim().toUpperCase() %></h4>
+                        <h2 class="object-title"><%= item.name %></h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="stat-left">
+                            <span class="value">
+                                <svg class="stat-icon scale-icon" viewBox="0 0 24 24">
+                                    <path d="M12 2a4 4 0 0 1 4 4v2H8V6a4 4 0 0 1 4-4zm0 2a2 2 0 0 0-2 2v2h4V6a2 2 0 0 0-2-2zM4 9h16l-1.5 13h-13L4 9z" />
+                                    <text x="12" y="19" font-size="9" text-anchor="middle" fill="#121212" font-weight="bold" font-family="sans-serif">lb</text>
+                                </svg>
+                                <%= item.Weight %>
+                            </span>
+                        </div>
+                        <% if (item.additional) { %>
+                        <div class="stat-right">
+                            <span class="value">
+                                <% if (item.weaponCategory || cleanType === 'M' || cleanType === 'R' || cleanType === 'A' || categoryName === 'Weapons') { %>
+                                    <svg class="stat-icon scale-icon" viewBox="0 0 24 24"><path d="M14.5 17.5L3 6V3h3l11.5 11.5-3 3zM12.5 15.5L16 12l5 5-1 1-2-2-1 1-2-2z"/></svg>:
+                                <% } else if (cleanType === 'LA' || cleanType === 'MA' || cleanType === 'HA' || cleanType === 'S' || categoryName === 'Armor' || categoryName === 'Barding') { %>
+                                    <svg class="stat-icon scale-icon" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>:
+                                <% } %> <%= item.additional %>
+                            </span>
+                        </div>
+                        <% } %>
+                    </div>
+                    <div class="card-footer">
+                        <div class="cost-display">
+                            <span class="coin-value"><%= coins.gp %></span>
+                            <svg class="coin-icon gold" viewBox="0 0 24 24">
+                                <circle cx="9" cy="9" r="8" fill="#FFD700" stroke="#DAA520" stroke-width="1.5"/>
+                                <circle cx="15" cy="12" r="8" fill="#FFD700" stroke="#DAA520" stroke-width="1.5"/>
+                                <path d="M15 7 L13.5 10 L10 9 L13 12 L15 17 L17 12 L20 9 L16.5 10 Z" fill="#DAA520"/>
+                            </svg>
+                            <span class="coin-value"><%= coins.sp %></span>
+                            <svg class="coin-icon silver" viewBox="0 0 24 24">
+                                <circle cx="9" cy="9" r="8" fill="#C0C0C0" stroke="#A9A9A9" stroke-width="1.5"/>
+                                <circle cx="15" cy="12" r="8" fill="#C0C0C0" stroke="#A9A9A9" stroke-width="1.5"/>
+                                <path d="M15 7 L13.5 10 L10 9 L13 12 L15 17 L17 12 L20 9 L16.5 10 Z" fill="#A9A9A9"/>
+                            </svg>
+                            <span class="coin-value"><%= coins.cp %></span>
+                            <svg class="coin-icon bronze" viewBox="0 0 24 24">
+                                <circle cx="9" cy="9" r="8" fill="#CD7F32" stroke="#8B4513" stroke-width="1.5"/>
+                                <circle cx="15" cy="12" r="8" fill="#CD7F32" stroke="#8B4513" stroke-width="1.5"/>
+                                <path d="M15 7 L13.5 10 L10 9 L13 12 L15 17 L17 12 L20 9 L16.5 10 Z" fill="#8B4513"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% 
+                    });
+                } else if (typeof obj[key] === 'object' && obj[key] !== null) {
+                    renderItems(obj[key]);
+                }
+            }
+        }
+        if (typeof inventory !== 'undefined') { renderItems(inventory); }
+        %>
+    </main>
+
+    <!-- Shopping Cart UI -->
+    <div id="cart-sidebar" class="hidden">
+        <div id="cart-toggle-icon">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="#8d713c">
+                <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+            </svg>
+        </div>
+        <h2 id="cart-title">Shopping Cart</h2>
+        <div id="cart-items-list" style="overflow-y: auto; flex-grow: 1;">
+            <!-- Items will be injected here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total" id="cart-total-display">
+                <!-- Total will be injected here -->
+            </div>
+            <button class="checkout-btn">Complete Operation</button>
+        </div>
+    </div>
+
+    <!--  Background animations  -->
+    <div id="cinders-container"></div>
+    <script src="/js/cinders.js"></script>
+    <script>
+        const nav = document.querySelector('nav');
+        const header = document.querySelector('header.top-bar');
+        const searchBox = document.querySelector('.search-box');
+        const playerBox = document.querySelector('.player-name-box');
+        const hamburger = document.getElementById('hamburger-btn');
+        const closeBtn = document.querySelector('.close-menu-btn');
+
+        hamburger.addEventListener('click', () => {
+            nav.classList.add('open');
+            hamburger.classList.add('hidden');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            nav.classList.remove('open');
+            hamburger.classList.remove('hidden');
+        });
+
+        function adjustLayout() {
+            if (window.innerWidth <= 850) {
+                if (searchBox && searchBox.parentElement !== nav) nav.appendChild(searchBox);
+                if (playerBox && playerBox.parentElement !== nav) nav.appendChild(playerBox);
+            } else {
+                nav.classList.remove('open');
+                hamburger.classList.remove('hidden');
+                if (searchBox && searchBox.parentElement !== header) header.appendChild(searchBox);
+                if (playerBox && playerBox.parentElement !== header) header.appendChild(playerBox);
+            }
+        }
+        window.addEventListener('resize', adjustLayout);
+        adjustLayout();
+
+        // Category Filtering
+        const cats = document.querySelectorAll('.cat');
+        const cards = document.querySelectorAll('.product-card');
+        const searchInput = document.querySelector('.search-box input');
+
+        function filterItems() {
+            const activeCat = document.querySelector('.cat.active');
+            const selectedCat = activeCat ? activeCat.getAttribute('data-cat') : null;
+            const searchText = searchInput ? searchInput.value.toLowerCase() : '';
+
+            cards.forEach(card => {
+                const cardCat = card.getAttribute('data-category');
+                const cardName = card.getAttribute('data-name').toLowerCase();
+                
+                const matchesCat = !selectedCat || cardCat === selectedCat;
+                const matchesSearch = !searchText || cardName.includes(searchText);
+
+                if (matchesCat && matchesSearch) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        cats.forEach(cat => {
+            cat.addEventListener('click', () => {
+                const isActive = cat.classList.contains('active');
+                cats.forEach(c => c.classList.remove('active'));
+                
+                if (!isActive) {
+                    cat.classList.add('active');
+                }
+                filterItems();
+            });
+        });
+
+        if (searchInput) {
+            searchInput.addEventListener('input', filterItems);
+        }
+
+        // --- Shopping Cart Logic ---
+        const cart = {};
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const cartItemsList = document.getElementById('cart-items-list');
+        const cartTotalDisplay = document.getElementById('cart-total-display');
+
+        function addToCart(name, cost) {
+            if (cart[name]) {
+                cart[name].quantity += 1;
+            } else {
+                cart[name] = { cost: cost, quantity: 1 };
+            }
+            updateCartUI();
+        }
+
+        function removeFromCart(name) {
+            if (cart[name]) {
+                delete cart[name];
+                updateCartUI();
+            }
+        }
+
+function escapeQuotes(str) {
+    return JSON.stringify(str).replace(/"/g, '&quot;');
+}
+
+function changeQuantity(name, delta) {
+    if (cart[name]) {
+        cart[name].quantity += delta;
+        if (cart[name].quantity <= 0) {
+            delete cart[name];
+        }
+        updateCartUI();
+    }
+}
+
+function setQuantity(name, value) {
+    if (cart[name]) {
+        const newQty = parseInt(value);
+        if (newQty > 0) {
+            cart[name].quantity = newQty;
+        } else {
+            delete cart[name];
+        }
+        updateCartUI();
+    }
+}
+
+        function updateCartUI() {
+            // Toggle Sidebar Visibility
+            const totalItems = Object.values(cart).reduce((acc, item) => acc + item.quantity, 0);
+            if (totalItems > 0) {
+                cartSidebar.classList.remove('hidden');
+            } else {
+                cartSidebar.classList.add('hidden');
+            }
+
+            // Render Cart Items
+            cartItemsList.innerHTML = '';
+            let totalCost = 0;
+
+            for (const [name, item] of Object.entries(cart)) {
+                const itemTotalCost = item.cost * item.quantity;
+                totalCost += itemTotalCost;
+                
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'cart-item';
+                
+                const unitCoins = getCoinsJS(item.cost);
+                const coins = getCoinsJS(itemTotalCost);
+                
+                itemDiv.innerHTML = `
+                    <div class="cart-item-header">
+                        <div class="cart-item-name">${name}</div>
+                        <div class="cart-item-calc">${item.quantity} x ${renderCoinsHTML(unitCoins)}</div>
+                    </div>
+                    <div class="cart-item-body">
+                        <div class="cart-item-controls">
+                    <button class="qty-btn" onclick="changeQuantity(${escapeQuotes(name)}, -1)">-</button>
+                    <input type="number" class="qty-input" value="${item.quantity}" onchange="setQuantity(${escapeQuotes(name)}, this.value)">
+                    <button class="qty-btn" onclick="changeQuantity(${escapeQuotes(name)}, 1)">+</button>
+                        </div>
+                        <div class="cart-coin-display">
+                            ${renderCoinsHTML(coins)}
+                        </div>
+                    </div>
+                `;
+                cartItemsList.appendChild(itemDiv);
+
+                //  Update Product Card Bubble
+        const card = document.querySelector(`.product-card[data-name="${name.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"]`);
+                if (card) {
+                    let bubble = card.querySelector('.card-bubble');
+                    if (!bubble) {
+                        bubble = document.createElement('div');
+                        bubble.className = 'card-bubble';
+                        bubble.onclick = (e) => {
+                            e.stopPropagation(); // Prevent triggering card click if any
+                            removeFromCart(name);
+                        };
+                        card.appendChild(bubble);
+                    }
+                    bubble.innerHTML = `<span>${item.quantity}</span>`;
+                }
+            }
+
+            // Cleanup bubbles for removed items
+            document.querySelectorAll('.product-card').forEach(card => {
+                const name = card.getAttribute('data-name');
+                if (!cart[name]) {
+                    const bubble = card.querySelector('.card-bubble');
+                    if (bubble) bubble.remove();
+                }
+            });
+
+            // Render Total
+            const totalCoins = getCoinsJS(totalCost);
+            cartTotalDisplay.innerHTML = `<span>Total:</span> <div class="cart-coin-display">${renderCoinsHTML(totalCoins)}</div>`;
+        }
+
+        function getCoinsJS(cost) {
+            let totalCp = Math.round(cost * 100);
+            let gp = Math.floor(totalCp / 100);
+            let sp = Math.floor((totalCp % 100) / 10);
+            let cp = totalCp % 10;
+            return { gp, sp, cp };
+        }
+
+        function renderCoinsHTML(coins) {
+            let html = '';
+            // Simple SVG circles for cart display to match style
+            const goldSvg = `<svg class="coin-icon gold" viewBox="0 0 24 24" style="width:14px;height:14px;margin:0 2px;"><circle cx="12" cy="12" r="10" fill="#FFD700" stroke="#DAA520" stroke-width="2"/></svg>`;
+            const silverSvg = `<svg class="coin-icon silver" viewBox="0 0 24 24" style="width:14px;height:14px;margin:0 2px;"><circle cx="12" cy="12" r="10" fill="#C0C0C0" stroke="#A9A9A9" stroke-width="2"/></svg>`;
+            const bronzeSvg = `<svg class="coin-icon bronze" viewBox="0 0 24 24" style="width:14px;height:14px;margin:0 2px;"><circle cx="12" cy="12" r="10" fill="#CD7F32" stroke="#8B4513" stroke-width="2"/></svg>`;
+
+            if (coins.gp > 0) html += `<span class="coin-value" style="margin-right:2px;">${coins.gp}</span>${goldSvg}`;
+            if (coins.sp > 0) html += `<span class="coin-value" style="margin-right:2px;">${coins.sp}</span>${silverSvg}`;
+            if (coins.cp > 0) html += `<span class="coin-value" style="margin-right:2px;">${coins.cp}</span>${bronzeSvg}`;
+            
+            return html || '0';
+        }
+
+        document.querySelector('.checkout-btn').addEventListener('click', () => {
+            const playerInput = document.querySelector('.player-name-box input');
+            let playerName = playerInput.value.trim();
+
+            if (!playerName) {
+                playerName = '[Character name]';
+            }
+
+            if (Object.keys(cart).length === 0) {
+                alert('Cart is empty');
+                return;
+            }
+
+            let message = `${playerName} compra:\n`;
+            for (const [name, item] of Object.entries(cart)) {
+                message += `- ${item.quantity} ${name}\n`;
+            }
+
+            const discordUrl = 'https://discord.com/channels/1302041074092478555/1303562045811326996';
+            const discordAppUrl = 'discord://discord.com/channels/1302041074092478555/1303562045811326996';
+
+            navigator.clipboard.writeText(message).then(() => {
+                window.location.href = discordAppUrl;
+                window.open(discordUrl, '_blank');
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                window.location.href = discordAppUrl;
+                window.open(discordUrl, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 // routes/web.js
 import { Router } from 'express';
 import path from 'path';
+import fs from 'fs/promises';
 const router = Router();
 
 const publicPath = path.resolve('src/public');
@@ -10,18 +11,26 @@ router.get('/', (req, res) => {
   res.render('index')
 });
 
-// Ruta para la tienda
-router.get('/shop', (req, res) => {
-  const productos  = req.app.locals.products || []
-  const categorias = [...new Set(productos.map(p => p.category))].sort()
-  res.render('shop', { productos, categorias })
+// Ruta de la nueva tienda
+router.get('/new-shop', async (req, res) => {
+  const filePath = path.resolve('data', 'tienda/items_new.json');
+  const data = await fs.readFile(filePath, 'utf-8');
+  const inventory = JSON.parse(data).equipment;
+  const categorias = Object.keys(inventory);
+  res.render('new-shop', { inventory, categorias })
 })
 
-// Ruta para la página de carro
-router.get('/cart', (req, res) => {
-  const productos = req.app.locals.products || []
-  res.render('cart', { productos })
-})
-
+// Ruta del mapa
+router.get('/mapa', async (req, res) => {
+  try {
+    const poiPath = path.resolve('data', 'mapa/puntos_interes.json');
+    const data = await fs.readFile(poiPath, 'utf-8');
+    const pointsOfInterest = JSON.parse(data);
+    res.render('mapa', { pointsOfInterest });
+  } catch (error) {
+    console.error('Error loading map data:', error);
+    res.render('mapa');
+  }
+});
 
 export default router;

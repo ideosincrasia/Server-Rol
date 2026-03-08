@@ -1,0 +1,375 @@
+// ====================== CONFIG ======================
+const HEX = window.MAP_CONFIG.HEX;
+const COVER = window.MAP_CONFIG.COVER;
+const LABEL = window.MAP_CONFIG.LABEL;
+// ====================================================
+
+// Small helpers for auth/UI
+const $ = (id) => document.getElementById(id);
+const statusEl = $('status'), loginBtn = $('login'), logoutBtn = $('logout'),
+      secretBtn = $('secret'), backBtn = $('back');
+
+// Fetch a short-lived image URL for a map ('public' or 'secret')
+async function getImageSrc(mapKey='public') {
+  const r = await fetch(`/api/img-meta?map=${mapKey}`);
+  if (!r.ok) throw new Error(`img-meta failed (${mapKey})`);
+  const j = await r.json();
+  if (!j.ok) throw new Error(j.error || 'img-meta error');
+  return j.src; // e.g., /img/public?expires=...&sig=...
+}
+
+// Build or rebuild the map for a given image URL
+let map; // Leaflet instance
+async function buildMapFor(srcUrl) {
+  // (Re)load image to get dimensions
+  const img = await new Promise((resolve, reject) => {
+    const i = new Image();
+    i.onload = () => resolve(i);
+    i.onerror = () => reject(new Error('Image load error: ' + srcUrl));
+    i.src = srcUrl;
+  });
+
+  const imgW = img.naturalWidth, imgH = img.naturalHeight;
+
+  // If a map exists already, destroy it fully (simplest/cleanest)
+  if (map) { map.remove(); }
+
+  // ---------- Bounds & map ----------
+  const bounds = L.latLngBounds([[0, 0], [imgH, imgW]]);
+  map = L.map('map', {
+    crs: L.CRS.Simple,
+    zoomSnap: 0, zoomDelta: 0.25,
+    maxBounds: bounds, maxBoundsViscosity: 1.0,
+    wheelPxPerZoomLevel: 80
+  });
+
+  // Base image
+  const base = L.imageOverlay(srcUrl, bounds).addTo(map);
+
+  // Cover canvas (no gaps)
+  const applyCover = () => {
+    const coverZoom = map.getBoundsZoom(bounds, { inside: false });
+    const minZ = coverZoom - (COVER.allowExtraZoomOutLevels || 0);
+    map.setMinZoom(minZ);
+    if (map.getZoom() < minZ) map.setZoom(minZ, { animate: false });
+    map.setView(bounds.getCenter(), Math.max(map.getZoom(), minZ), { animate: false });
+    map.panInsideBounds(bounds, { animate: false });
+  };
+  applyCover();
+  addEventListener('resize', applyCover);
+  addEventListener('orientationchange', applyCover);
+
+  // ---------- HEX MATH (POINTY-TOP) ----------
+  const SQRT3 = Math.sqrt(3);
+  
+  function axialToPixel(q, r) {
+    const x = HEX.size * SQRT3 * (q + r/2) + HEX.origin.x;
+    const y = HEX.size * 1.5   * r + HEX.origin.y;
+    return { x, y };
+  }
+
+  function pixelToAxial(x, y) {
+    const px = x - HEX.origin.x, py = y - HEX.origin.y;
+    const q  = (SQRT3/3 * px - 1/3 * py) / HEX.size;
+    const r  = (2/3 * py) / HEX.size;
+    return { q, r };
+  }
+
+  function axialToCube(q, r){ return { x:q, y:-q-r, z:r }; }
+
+  function cubeToAxial(x,y,z){ return { q:x, r:z }; }
+
+  function cubeRound(x, y, z) {
+    let rx = Math.round(x), ry = Math.round(y), rz = Math.round(z);
+    const dx = Math.abs(rx-x), dy = Math.abs(ry-y), dz = Math.abs(rz-z);
+    if (dx > dy && dx > dz) rx = -ry - rz;
+    else if (dy > dz)       ry = -rx - rz;
+    else                    rz = -rx - ry;
+    return { x: rx, y: ry, z: rz };
+  }
+
+  function axialRound(q, r) {
+    const c = cubeRound(q, -q - r, r);
+    return cubeToAxial(c.x, c.y, c.z);
+  }
+
+  function hexCornersFor(q, r) {
+    const c = axialToPixel(q, r);
+    const corners = [];
+    for (let i = 0; i < 6; i++) {
+      const angleDeg = 60 * i - 30;
+      const ang = Math.PI/180 * angleDeg;
+      corners.push({ x: c.x + HEX.size * Math.cos(ang), y: c.y + HEX.size * Math.sin(ang) });
+    }
+
+    return corners;
+  }
+
+  // ---------- LABELS ----------
+  function numberToLetters(n) {
+    let s = ""; while (n > 0) { const r = (n - 1) % 26; s = String.fromCharCode(65 + r) + s; n = Math.floor((n - 1) / 26); }
+    return s || "0";
+  }
+  function screenColumnIndex(q, r) { return Math.round(q + r/2); }
+  function finalCoordLabel(q, r) {
+    const col = screenColumnIndex(q, r) + (LABEL.xOffset || 0);
+    const rowLabel = (LABEL.yScale || 1) * r + (LABEL.yOffset || 0);
+    const isOddY = Math.abs(Math.round(rowLabel)) % 2 === 1;
+    const col1 = col + 1;
+    const mappedX1 = isOddY ? (2 * col1 + 1) : (2 * col1);
+    const X = numberToLetters(mappedX1);
+    const Y = String(Math.round(rowLabel));
+    return { X, Y };
+  }
+
+  // ---------- UI: hover + click ----------
+  const hoverHex = L.polygon([], { weight: 1, color: '#60A5FA', fillColor: '60A5FA', fillOpacity: 0.10 }).addTo(map);
+  const tip = L.tooltip({ opacity: 0.9, direction: 'top' });
+  let lastClick = null;
+
+  // Mouse move: update hover hex + tooltip + coords display
+  map.on('mousemove', (e) => {
+    const px = e.latlng.lng, py = e.latlng.lat;
+    const { q, r } = axialRound(...Object.values(pixelToAxial(px, py)));
+    const corners = hexCornersFor(q, r).map(p => [p.y, p.x]);
+    hoverHex.setLatLngs(corners);
+    const center = axialToPixel(q, r);
+    const { X, Y } = finalCoordLabel(q, r);
+    tip.setLatLng([center.y, center.x]).setContent(`${X}${Y}`).addTo(map);
+    $('coords').textContent = `X: ${px.toFixed(1)}  Y: ${py.toFixed(1)}  |  q=${q} r=${r}  |  ${X}${Y}`;
+  });
+
+  // Click: add/remove selected hexes
+  map.on('click', (e) => {
+    const px = e.latlng.lng, py = e.latlng.lat;
+    const { q, r } = axialRound(...Object.values(pixelToAxial(px, py)));
+
+    // Hold Alt/Ctrl/⌘ to remove; plain click to add 
+    const removeMode = e.originalEvent.altKey || e.originalEvent.ctrlKey || e.originalEvent.metaKey;
+
+    if (removeMode) {
+      removeSelected(q, r);
+    } else {
+      toggleSelected(q,r);        // or: toggleSelected(q, r);
+    }
+  });
+
+  // Helpers to track selected hexs
+    const selectedLayer = L.layerGroup().addTo(map);
+    const selectedHexes = new Map();           // key "q,r" -> { layer, q, r }
+    const lastSelectHex = null;
+
+    const hexKey = (q, r) => `${q},${r}`;
+    const hexLatLngs = (q, r) => hexCornersFor(q, r).map(p => [p.y, p.x]);
+
+    function addSelected(q, r) {
+      const key = hexKey(q, r);
+      if (selectedHexes.has(key)) return;
+      const poly = L.polygon(hexLatLngs(q, r), {
+        weight: 1.25,
+        color: '#1E40AF',
+        fillColor: '#60A5FA',
+        fillOpacity: 0.35,
+        interactive: false
+      }).addTo(selectedLayer);
+      selectedHexes.set(key, { layer: poly, q, r });
+    }
+
+    function removeSelected(q, r) {
+      const key = hexKey(q, r);
+      const entry = selectedHexes.get(key);
+      if (!entry) return;
+      selectedLayer.removeLayer(entry.layer);
+      selectedHexes.delete(key);
+    }
+
+    function toggleSelected(q, r) {
+      if (selectedHexes.has(hexKey(q, r))) removeSelected(q, r);
+      else addSelected(q, r);
+    }
+
+/* ===========================
+    PUNTOS DE INTERÉS (POI) 
+    Refer to : /data/puntos_interes.json
+=========================== */
+
+  (function () {
+    // ---------- CONFIG ----------
+    const SOURCE_JSON = '/data/puntos_interes.json';
+    const ICON_W = 100, ICON_H = ICON_W;                  // tamaño del icono
+    const AUTO_FIT_AFTER_LOAD = true;               // true => encaja vista tras cargar
+
+    // ---------- PRECHECK ----------
+    const _map = (typeof map !== 'undefined') ? map : (window && window.map);
+    if (!window.L || !_map) {
+      console.warn('[POI] No se encontró Leaflet o el mapa (`map`). Coloca este bloque tras crear el mapa.');
+      return;
+    }
+
+    // ---------- CAPA + ESTADO ----------
+    const layer = L.layerGroup().addTo(_map);
+    const registry = new Map(); // id -> marker
+
+    // ---------- HELPERS ----------
+    function buildIcon(url) {
+      const fallbackSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="${ICON_W}" height="${ICON_H}">
+        <circle cx="${ICON_W/2}" cy="${ICON_H/2}" r="${Math.min(ICON_W,ICON_H)/2 - 4}" fill="#60A5FA" stroke="#1E40AF" stroke-width="2"/>
+      </svg>`;
+      const dataURL = 'data:image/svg+xml;utf8,' + encodeURIComponent(fallbackSVG);
+      return L.icon({
+        iconUrl: url || dataURL,
+        iconSize: [ICON_W, ICON_H],
+        iconAnchor: [Math.round(ICON_W/2), ICON_H]
+      });
+    }
+
+    function toLatLng(poi) {
+      if (poi && poi.xy && Number.isFinite(poi.xy.x) && Number.isFinite(poi.xy.y)) {
+        // CRS.Simple => [lat=y, lng=x]
+        return L.latLng(poi.xy.y, poi.xy.x);
+      }
+      return null;
+    }
+
+    function popupHTML(poi) {
+      const nombre = poi.nombre || poi.id || 'Punto';
+      const desc = poi.descripcion ? `<div style="margin-top:6px">${poi.descripcion}</div>` : '';
+      const img = poi.icono ? `<img src="${poi.icono}" style="width:40px;height:40px;object-fit:contain;margin-right:8px;vertical-align:middle">` : '';
+      return `<div style="display:flex;align-items:center">${img}<div><b>${nombre}</b>${desc}</div></div>`;
+    }
+
+    // ---------- API ----------
+    function add(poi) {
+      if (!poi) return null;
+      if (!poi.id) poi.id = 'poi_' + Math.random().toString(36).slice(2, 9);
+
+      // actualizar existente
+      if (registry.has(poi.id)) {
+        const mk = registry.get(poi.id);
+        const ll = toLatLng(poi);
+        if (!ll) { console.warn(`[POI] '${poi.id}' sin xy válidos`); return mk; }
+        mk.setLatLng(ll);
+        mk.setIcon(buildIcon(poi.icono));
+        mk._poi = poi;
+        return mk;
+      }
+
+      const latlng = toLatLng(poi);
+      if (!latlng) {
+        console.warn(`[POI] '${poi.id}' sin coordenadas válidas. Usa {xy:{x,y}}`);
+        return null;
+      }
+
+      const marker = L
+        .marker(latlng, { icon: buildIcon(poi.icono) })
+        .bindPopup(popupHTML(poi))
+        .addTo(layer);
+
+      marker._poi = poi;
+      registry.set(poi.id, marker);
+      return marker;
+    }
+
+    function clear() {
+      layer.clearLayers();
+      registry.clear();
+    }
+
+    async function load(source = SOURCE_JSON) {
+      try {
+        let data;
+        if (window.MAP_CONFIG && window.MAP_CONFIG.POINTS) {
+            data = window.MAP_CONFIG.POINTS;
+        } else {
+            const res = await fetch(source, { cache: 'no-store' });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            data = await res.json();
+        }
+        clear();
+        (Array.isArray(data) ? data : []).forEach(add);
+        console.log(`[POI] Cargados ${registry.size} puntos.`);
+        if (AUTO_FIT_AFTER_LOAD) fit();
+      } catch (err) {
+        console.error('[POI] Error cargando', source, err);
+      }
+    }
+
+    function list() {
+      return Array.from(registry.values()).map(mk => mk._poi);
+    }
+
+    function fit(ids) {
+      const pts = [];
+      if (!ids) {
+        layer.eachLayer(l => pts.push(l.getLatLng()));
+      } else {
+        (Array.isArray(ids) ? ids : [ids]).forEach(id => {
+          const mk = registry.get(id);
+          if (mk) pts.push(mk.getLatLng());
+        });
+      }
+      if (pts.length) _map.fitBounds(L.latLngBounds(pts), { padding: [20,20] });
+    }
+
+    // ---------- EXPONER Y ARRANCAR ----------
+    window.poi = { add, clear, load, list, fit, layer };
+    load(); // carga automática desde SOURCE_JSON
+  })();
+
+  // Console helpers
+  window.hex = {
+    map,
+    setOriginFromHere() { if (!lastClick) return console.warn('Click first'); HEX.origin = { x: lastClick.lng, y: lastClick.lat }; console.log('Origin', HEX.origin); },
+    setOrigin(x, y) { HEX.origin = { x, y }; console.log('Origin', HEX.origin); },
+    setSize(s) { HEX.size = s; console.log('Size', s); },
+    setYScale(k) { LABEL.yScale = k; console.log('yScale', k); },
+    setOffsets(xOff=0, yOff=0) { LABEL.xOffset = xOff; LABEL.yOffset = yOff; console.log('Offsets:', xOff, yOff); },
+  };
+}
+
+
+// ---- Boot flow: public first (no login), then optionally secret ----
+async function boot() {
+  // Public map (no auth)
+  const publicSrc = await getImageSrc('public');
+  await buildMapFor(publicSrc);
+  statusEl.textContent = 'Public map (no login required)';
+
+  // Session status
+  const meRes = await fetch('/api/me');
+  const me = meRes.ok ? await meRes.json() : { ok:false };
+
+  if (!me.ok) {
+    loginBtn.style.display = 'inline-block';
+    loginBtn.onclick = () => location.href = '/login';
+  } else {
+    logoutBtn.style.display = 'inline-block';
+    logoutBtn.onclick = () => location.href = '/logout';
+    if (me.isPriv) {
+      secretBtn.style.display = 'inline-block';
+      secretBtn.onclick = async () => {
+        try {
+          const secretSrc = await getImageSrc('secret');
+          await buildMapFor(secretSrc);
+          statusEl.textContent = `Secret map (hello ${me.user.username})`;
+          secretBtn.style.display = 'none';
+          backBtn.style.display = 'inline-block';
+        } catch {
+          alert('You need the required role to see the secret map.');
+        }
+      };
+      backBtn.onclick = async () => {
+        const publicSrc2 = await getImageSrc('public');
+        await buildMapFor(publicSrc2);
+        statusEl.textContent = 'Public map (no login required)';
+        backBtn.style.display = 'none';
+        secretBtn.style.display = 'inline-block';
+      };
+    }
+  }
+}
+
+boot().catch(err => {
+  console.error(err);
+  statusEl.textContent = 'Init error.';
+});

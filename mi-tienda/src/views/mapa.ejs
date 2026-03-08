@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Fantasy Hex Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="/css/mapa.css" />
+</head>
+<body>
+  <div class="header-banners">
+    <a href="/new-shop" class="banner-item" style="--bg-img: linear-gradient(to bottom, #594622, #8d713c)">
+      <div class="text">
+        <h4>SHOP</h4>
+      </div>
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M21.9 8.89l-1.05-4.37c-.22-.9-1-1.52-1.91-1.52H5.06c-.91 0-1.69.61-1.91 1.52l-1.05 4.37c-.1.42.05.85.32 1.15.2.22.48.36.79.36.22 0 .44-.07.62-.21L5 9.44V19c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V9.44l1.17.73c.18.14.4.21.62.21.31 0 .59-.13.79-.36.27-.3.42-.73.32-1.13zM7 19V9.44l2.17 1.36c.18.14.4.21.62.21.31 0 .59-.13.79-.36.27-.3.42-.73.32-1.13L9.85 5h4.3l-1.05 4.52c-.1.42.05.85.32 1.15.2.22.48.36.79.36.22 0 .44-.07.62-.21L17 9.44V19H7z"/></svg>
+      </div>
+    </a>
+  </div>
+  <div id="bar" style="display:none;">
+    <span id="status">Loading…</span>
+    <button id="login"  style="display:none">Login with Discord</button>
+    <button id="logout" style="display:none">Logout</button>
+    <button id="secret" style="display:none">Show secret map</button>
+    <button id="back"   style="display:none">Back to public</button>
+  </div>
+
+  <div id="map"></div>
+  <div id="coords">X: –, Y: –</div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    // Configuration passed from server or defaults
+    window.MAP_CONFIG = {
+      HEX: <%- typeof hexConfig !== 'undefined' ? JSON.stringify(hexConfig) : JSON.stringify({ orientation: 'pointy', size: 65, origin: { x: 226, y: 6045 } }) %>,
+      COVER: { allowExtraZoomOutLevels: 1 },
+      LABEL: { xOffset: -1, yOffset: 1, yScale: -1, xIndexMethod: 'round' },
+      POINTS: <%- typeof pointsOfInterest !== 'undefined' ? JSON.stringify(pointsOfInterest) : 'null' %>
+    };
+  </script>
+  <script src="/js/mapa.js"></script>
+</body>
+</html>
