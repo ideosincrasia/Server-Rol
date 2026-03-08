@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 });
 
 // Ruta de la nueva tienda
-router.get('/new-shop', async (req, res) => {
+router.get('/shop', async (req, res) => {
   const filePath = path.resolve('data', 'tienda/items_new.json');
   const data = await fs.readFile(filePath, 'utf-8');
   const inventory = JSON.parse(data).equipment;
